@@ -342,6 +342,7 @@
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost" id="themeToggle" title="Cambiar tema">🌓</button>
+      <button class="btn" id="clientsBtn">👥 Clientes</button>
       <button class="btn" id="reportsBtn">📊 Reportes</button>
       <button class="btn" id="exportBtn">⭳ Exportar</button>
       <button class="btn btn-primary" id="newProjectBtn">+ Nuevo proyecto</button>
@@ -449,7 +450,9 @@
       </div>
       <div class="field">
         <label>Cliente</label>
-        <input type="text" id="fCliente" placeholder="Ej. Café Andino S.A.">
+        <input type="text" id="fCliente" placeholder="Ej. Café Andino S.A." list="clientesDatalist" autocomplete="off">
+        <datalist id="clientesDatalist"></datalist>
+        <div id="clienteFeeHint" class="hidden" style="margin-top:6px; font-size:12px; color:var(--status-good);"></div>
       </div>
       <div class="field-row">
         <div class="field">
@@ -615,6 +618,14 @@
   <div class="modal" style="max-width:480px;">
     <h2>Reporte de cobros</h2>
     <p class="note" style="margin-top:-8px;">Suma de los cobros registrados por mes, según la fecha de cada uno.</p>
+
+    <div class="table-wrap hidden" id="reportFeeClientsWrap" style="margin-bottom:16px;">
+      <table>
+        <thead><tr><th>Cliente con fee fijo</th><th>Fee mensual</th></tr></thead>
+        <tbody id="reportFeeClientsBody"></tbody>
+      </table>
+    </div>
+
     <div class="field">
       <label>Año</label>
       <select id="reportYear"></select>
@@ -630,6 +641,54 @@
       <div class="right">
         <button type="button" class="btn btn-ghost" id="reportsCancelBtn">Cerrar</button>
         <button type="button" class="btn btn-primary" id="reportsDownloadBtn">⭳ Descargar Excel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- Modal de clientes ---------- -->
+<div class="overlay hidden" id="clientsOverlay">
+  <div class="modal" style="max-width:560px;">
+    <h2>Clientes</h2>
+    <p class="note" style="margin-top:-8px;">Registra tus clientes una vez y luego selecciónalos al crear proyectos. Marca los que pagan un fee mensual fijo (para esos no hace falta cobrar por cada tarea).</p>
+
+    <form id="clientForm">
+      <input type="hidden" id="clientFormId">
+      <div class="field-row">
+        <div class="field" style="flex:1;">
+          <label>Nombre del cliente</label>
+          <input type="text" id="clientFormNombre" required placeholder="Ej. Café Andino S.A.">
+        </div>
+      </div>
+      <div class="field-row" style="align-items:center;">
+        <label style="display:flex; align-items:center; gap:8px; font-weight:500; cursor:pointer;">
+          <input type="checkbox" id="clientFormFee" style="width:auto;">
+          Cobra fee mensual fijo
+        </label>
+      </div>
+      <div class="field hidden" id="clientFormFeeRow">
+        <label>Monto del fee mensual (USD)</label>
+        <input type="number" id="clientFormFeeAmount" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost hidden" id="clientFormCancelEditBtn">Cancelar edición</button>
+        <div class="right">
+          <button type="submit" class="btn btn-primary" id="clientFormSubmitBtn">+ Agregar cliente</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="table-wrap" style="margin-top:16px;">
+      <table>
+        <thead><tr><th>Cliente</th><th>Fee mensual</th><th></th></tr></thead>
+        <tbody id="clientTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="modal-actions">
+      <div></div>
+      <div class="right">
+        <button type="button" class="btn btn-ghost" id="clientsCloseBtn">Cerrar</button>
       </div>
     </div>
   </div>
@@ -661,6 +720,7 @@
 
   var state = {
     projects: [],
+    clients: [],
     currentUser: null,   // { id, name, role, mustChangePassword, meta }
     view: "kanban",
     search: "",
@@ -684,6 +744,10 @@
     "timerBox", "timerToggleBtn", "timerTotalDisplay", "timerByStage",
     "fNotas", "deleteBtn", "cancelBtn", "newProjectBtn", "exportBtn",
     "reportsBtn", "reportsOverlay", "reportYear", "reportTableBody", "reportsCancelBtn", "reportsDownloadBtn",
+    "reportFeeClientsWrap", "reportFeeClientsBody",
+    "clientsBtn", "clientsOverlay", "clientsCloseBtn", "clientForm", "clientFormId", "clientFormNombre",
+    "clientFormFee", "clientFormFeeRow", "clientFormFeeAmount", "clientFormSubmitBtn", "clientFormCancelEditBtn",
+    "clientTableBody", "clientesDatalist", "clienteFeeHint",
     "themeToggle", "userAvatar", "userName", "changePwBtn", "changePinBtn", "logoutBtn",
     "pwOverlay", "pwModalForm", "pwCurrent", "pwNew", "pwModalError", "pwCancelBtn",
     "pinOverlay", "pinModalForm", "pinNew", "pinModalError", "pinCancelBtn",
@@ -748,6 +812,7 @@
       id: row.id,
       nombre: row.nombre,
       cliente: row.cliente || "",
+      clienteId: row.cliente_id || null,
       etapa: row.etapa || "pendiente",
       fechaEntrega: row.fecha_entrega || "",
       prioridad: row.prioridad || "media",
@@ -770,6 +835,7 @@
     return {
       nombre: form.nombre,
       cliente: form.cliente,
+      cliente_id: form.clienteId || null,
       etapa: form.etapa,
       fecha_entrega: form.fechaEntrega || null,
       prioridad: form.prioridad,
@@ -1097,6 +1163,195 @@
     if (realtimeChannel) { sb.removeChannel(realtimeChannel); realtimeChannel = null; }
   }
 
+  /* ---------------- Clientes ---------------- */
+
+  var clientsRealtimeChannel = null;
+  var editingClientId = null;
+
+  function loadClients() {
+    return sb.from("clients").select("*").order("nombre", { ascending: true }).then(function (res) {
+      if (res.error) { showToast("No se pudieron cargar los clientes: " + res.error.message); return; }
+      state.clients = res.data || [];
+      renderClientesDatalist();
+      renderClientsTable();
+      updateClienteFeeHint();
+      renderReportFeeClients();
+    });
+  }
+
+  function subscribeClientsRealtime() {
+    if (clientsRealtimeChannel) return;
+    clientsRealtimeChannel = sb.channel("clients-sync")
+      .on("postgres_changes", { event: "*", schema: "public", table: "clients" }, function () {
+        loadClients();
+      })
+      .subscribe();
+  }
+
+  function unsubscribeClientsRealtime() {
+    if (clientsRealtimeChannel) { sb.removeChannel(clientsRealtimeChannel); clientsRealtimeChannel = null; }
+  }
+
+  function clientByName(name) {
+    var n = String(name || "").trim().toLowerCase();
+    if (!n) return null;
+    for (var i = 0; i < state.clients.length; i++) {
+      if (String(state.clients[i].nombre || "").trim().toLowerCase() === n) return state.clients[i];
+    }
+    return null;
+  }
+
+  function renderClientesDatalist() {
+    els.clientesDatalist.innerHTML = state.clients.map(function (c) {
+      return '<option value="' + escapeHtml(c.nombre) + '">';
+    }).join("");
+  }
+
+  function updateClienteFeeHint() {
+    var c = clientByName(els.fCliente.value);
+    if (c && c.cobra_fee_mensual) {
+      els.clienteFeeHint.textContent = "💳 " + c.nombre + " paga fee mensual fijo de " + money(c.fee_mensual) + " — no hace falta cobrar por esta tarea en particular.";
+      els.clienteFeeHint.classList.remove("hidden");
+    } else {
+      els.clienteFeeHint.classList.add("hidden");
+    }
+  }
+
+  // Devuelve una Promise que resuelve con el id del cliente cuyo nombre coincide
+  // (o crea el cliente si es nuevo). Si el nombre está vacío, resuelve con null.
+  function ensureClientId(name) {
+    var trimmed = String(name || "").trim();
+    if (!trimmed) return Promise.resolve(null);
+    var existing = clientByName(trimmed);
+    if (existing) return Promise.resolve(existing.id);
+    var who = state.currentUser;
+    return sb.from("clients").insert({
+      nombre: trimmed,
+      created_by: who.id,
+      created_by_name: who.name,
+      updated_by: who.id,
+      updated_by_name: who.name
+    }).select().then(function (res) {
+      if (res.error || !res.data || !res.data[0]) return null;
+      state.clients.push(res.data[0]);
+      renderClientesDatalist();
+      return res.data[0].id;
+    });
+  }
+
+  function renderClientsTable() {
+    if (!state.clients.length) {
+      els.clientTableBody.innerHTML = '<tr><td colspan="3" style="color:var(--text-muted);">Todavía no hay clientes registrados.</td></tr>';
+      return;
+    }
+    els.clientTableBody.innerHTML = state.clients.map(function (c) {
+      var feeCell = c.cobra_fee_mensual
+        ? '<span class="badge badge-good">' + money(c.fee_mensual) + "/mes</span>"
+        : '<span class="badge badge-neutral">Por proyecto</span>';
+      return "<tr>" +
+        "<td>" + escapeHtml(c.nombre) + "</td>" +
+        "<td>" + feeCell + "</td>" +
+        '<td style="white-space:nowrap; text-align:right;">' +
+          '<button type="button" class="btn btn-ghost client-edit-btn" data-id="' + c.id + '">Editar</button> ' +
+          '<button type="button" class="btn btn-danger client-delete-btn" data-id="' + c.id + '">Eliminar</button>' +
+        "</td>" +
+      "</tr>";
+    }).join("");
+    els.clientTableBody.querySelectorAll(".client-edit-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () { openEditClient(btn.getAttribute("data-id")); });
+    });
+    els.clientTableBody.querySelectorAll(".client-delete-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () { deleteClient(btn.getAttribute("data-id")); });
+    });
+  }
+
+  function renderReportFeeClients() {
+    var feeClients = state.clients.filter(function (c) { return c.cobra_fee_mensual; });
+    if (!feeClients.length) {
+      els.reportFeeClientsWrap.classList.add("hidden");
+      els.reportFeeClientsBody.innerHTML = "";
+      return;
+    }
+    var total = feeClients.reduce(function (a, c) { return a + (Number(c.fee_mensual) || 0); }, 0);
+    els.reportFeeClientsBody.innerHTML = feeClients.map(function (c) {
+      return "<tr><td>" + escapeHtml(c.nombre) + "</td><td>" + money(c.fee_mensual) + "</td></tr>";
+    }).join("") + "<tr><td><strong>Total fee mensual</strong></td><td><strong>" + money(total) + "</strong></td></tr>";
+    els.reportFeeClientsWrap.classList.remove("hidden");
+  }
+
+  function resetClientForm() {
+    editingClientId = null;
+    els.clientFormId.value = "";
+    els.clientForm.reset();
+    els.clientFormFeeRow.classList.add("hidden");
+    els.clientFormSubmitBtn.textContent = "+ Agregar cliente";
+    els.clientFormCancelEditBtn.classList.add("hidden");
+  }
+
+  function openEditClient(id) {
+    var c = state.clients.find(function (x) { return x.id === id; });
+    if (!c) return;
+    editingClientId = id;
+    els.clientFormId.value = id;
+    els.clientFormNombre.value = c.nombre || "";
+    els.clientFormFee.checked = !!c.cobra_fee_mensual;
+    els.clientFormFeeAmount.value = c.fee_mensual != null ? c.fee_mensual : "";
+    els.clientFormFeeRow.classList.toggle("hidden", !c.cobra_fee_mensual);
+    els.clientFormSubmitBtn.textContent = "Guardar cambios";
+    els.clientFormCancelEditBtn.classList.remove("hidden");
+    els.clientFormNombre.focus();
+  }
+
+  function deleteClient(id) {
+    sb.from("clients").delete().eq("id", id).then(function (res) {
+      if (res.error) { showToast("No se pudo eliminar el cliente: " + res.error.message); return; }
+      if (editingClientId === id) resetClientForm();
+      showToast("Cliente eliminado");
+      loadClients();
+    });
+  }
+
+  els.clientsBtn.addEventListener("click", function () {
+    resetClientForm();
+    loadClients();
+    els.clientsOverlay.classList.remove("hidden");
+  });
+  els.clientsCloseBtn.addEventListener("click", function () { els.clientsOverlay.classList.add("hidden"); });
+  els.clientsOverlay.addEventListener("click", function (e) { if (e.target === els.clientsOverlay) els.clientsOverlay.classList.add("hidden"); });
+  els.clientFormCancelEditBtn.addEventListener("click", resetClientForm);
+  els.clientFormFee.addEventListener("change", function () {
+    els.clientFormFeeRow.classList.toggle("hidden", !els.clientFormFee.checked);
+  });
+  els.fCliente.addEventListener("input", updateClienteFeeHint);
+
+  els.clientForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nombre = els.clientFormNombre.value.trim();
+    if (!nombre) return;
+    var who = state.currentUser;
+    var payload = {
+      nombre: nombre,
+      cobra_fee_mensual: !!els.clientFormFee.checked,
+      fee_mensual: els.clientFormFee.checked ? (parseFloat(els.clientFormFeeAmount.value) || 0) : 0,
+      updated_by: who.id,
+      updated_by_name: who.name
+    };
+    var req;
+    if (editingClientId) {
+      req = sb.from("clients").update(payload).eq("id", editingClientId);
+    } else {
+      payload.created_by = who.id;
+      payload.created_by_name = who.name;
+      req = sb.from("clients").insert(payload);
+    }
+    req.then(function (res) {
+      if (res.error) { showToast("Error al guardar el cliente: " + res.error.message); return; }
+      showToast("Cliente guardado");
+      resetClientForm();
+      loadClients();
+    });
+  });
+
   /* ---------------- Drag & drop ---------------- */
 
   function bindCardEvents() {
@@ -1215,6 +1470,7 @@
     els.timerBox.classList.add("hidden");
     els.overlay.classList.remove("hidden");
     updateAbonoUI();
+    updateClienteFeeHint();
     els.fNombre.focus();
   }
 
@@ -1239,6 +1495,7 @@
     renderTimerBox(p);
     els.overlay.classList.remove("hidden");
     updateAbonoUI();
+    updateClienteFeeHint();
   }
 
   function closeModal() { els.overlay.classList.add("hidden"); editingId = null; }
@@ -1271,6 +1528,13 @@
       notas: els.fNotas.value.trim()
     };
     if (!form.nombre) return;
+    ensureClientId(form.cliente).then(function (clienteId) {
+      form.clienteId = clienteId;
+      saveProjectForm(form);
+    });
+  });
+
+  function saveProjectForm(form) {
     var who = state.currentUser;
     var payload = formToDbPayload(form);
     var req;
@@ -1303,7 +1567,7 @@
       closeModal();
       loadProjects();
     });
-  });
+  }
 
   els.deleteBtn.addEventListener("click", function () {
     if (!editingId) return;
@@ -1373,6 +1637,7 @@
     var defaultYear = String(new Date().getFullYear());
     els.reportYear.value = years.indexOf(current) > -1 ? current : (years.indexOf(defaultYear) > -1 ? defaultYear : years[years.length - 1]);
     renderReportTable();
+    renderReportFeeClients();
   }
 
   els.reportsBtn.addEventListener("click", function () {
@@ -1440,6 +1705,7 @@
 
   function showLogin() {
     unsubscribeRealtime();
+    unsubscribeClientsRealtime();
     els.appRoot.classList.add("hidden");
     els.changePwScreen.classList.add("hidden");
     els.loginScreen.classList.remove("hidden");
@@ -1459,6 +1725,8 @@
     els.userName.textContent = state.currentUser.name;
     loadProjects();
     subscribeRealtime();
+    loadClients();
+    subscribeClientsRealtime();
   }
 
   function handleSession(session) {
