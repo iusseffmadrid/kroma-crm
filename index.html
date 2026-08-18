@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KROMA — CRM de Producción</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAORklEQVR4nO2dfXDU1bnHn+ec3+4mm92EkAAWUMCCELEBhdE6rd57W+1op1WnVTtzpS+iVg140apltO2td5zxpb0VRctrK6Od6tS2vtTW63Rq27n34tTiCyAGokYQIgp5Iewm+/o75+kfPxLB5kh+ZyHJ2X0+c/7IHzlnz/722ef7Pa+LTcvfAIYZCjHaHWDGLhwcjBEPgEa7D8wYhTMHY8TjxMGY4MzBGGHPwRjhzMEY4eBgjHhALCvM0HgcGowJlhXGCI9WGCOcORgjPEPKGGFZYYywrDBGODgYIywrjBE2pIwRlhXGCAcHY8Qj1hXGAGcOxggbUsYID2UZIywrjBEODsYIywpjhA0pY4RlhTHCssIY4czBGOGjCYwRNqSMEfYcjBH2HIwRDg7GCMsKY4QNKWOEZYUxwrLCGOHMwRjh4GCMeMTXPjEGOHMwRjg4GCM8WmGMeKPdgXAggkC0qKjpmJkr6z4MQkTaha+kSzOkiFAsUqbgI+DwT3EG/1wVkbEIlh4fiKAUHMwVQ/XhI53xBNZUybE/EnAmcyBC0adP1EdPn5EEAhj2V5cIEGHHe5n2fZmoJ0r4SAgRiz7VxeUF8ydaNkEgBPSk/Rff7C2tMyOBM55DIGbyat70xENXzbaofvfTu7Y+m65KClXCB4JAeV/9aNHs8+c1WDcCAItXtfpKxzwc44/emcwBA8lDadKahBhu6lCapMBCkUrzCeBJ7EwVvnvR9PPnNRQVDfv1j+hJ1BPfe7z9mU2dE+uiasz7DpeCAwAQQQpEgOEHBwBIgaVGhsDefv/85oabLzpJafJk6PZ8TVFP/Grjvp+98N7EusjYjwxw6WJ8AiCy721Q16oFgZAtqMnjoiu+eYpA1CEMzyG0Jk/g5p3p2x97q7Zaau3GrSjO7D6ngQK2LunwFoYPAhBAUcGKK0+ZNC4aiFSoFjQBCuxOF1vWb/cVVXvCibQBPEN6VKTE7j5/+SXTzmmq98NHBhEQEREs29D2zv5sPCZdiQxwaLQCAAC6hLpkkTs8iT19hS8vaLzhwpMscgYABAblrid3Pr+5c0Jt1FelvIWRhjOHkWDwPGNi/L+/MZsIMLypDSLjmU37Vz73bkMy6iuHvocALs2Q2lkG2xYQIbCNKxfPbkhGQg2eAzSRFNja0X/ro2/WxCQ5YkIPxy1ZGbnokIhdfcW7rph15sw6X5MX3mog4MGM37KuNVtQNU5ZjUFYVobAk9jdV7z07EnXnDdVWUQGgCZChFseadve0ZeocjIygIPjn5EC+3KqaUrNvYtOIbJZgNWapMD7f//uU3/fNz4Zcc5qDFI5sjKs0QoCKq0jElZe3VQb9yxGKEGVP27uuvfpdxoSEbeGJx/BNUNaYvWjNSIEdPf5K66cM29a0ma+S5MU2P5B5sYN26sjAsg9E3o4LCsf4knsThe/fu7kRedOtogMIgDETF61rGtN9ftRT7jpND6EgwMAgACEwHTWnz8jeee/z9JEFlZDEQmE5b9oe/Wdg8m457seGg5djE8AVEKaHqw+ZAuIUFRUFRUPXt1UE5PBWCMUwXB3zR93P/7/extro0WlwSk3NyScOQAABGI669+zaPacKQmlQ6eNYLj7v609d/66vT4RUc4OTz6Ca4b0OMyBeRK7UoVvf+HES88+wW7RVQrc05Vbur41IhAJ3NeTQzg3lC2l7hDRIQWmMsWzZtX98PJZOnzOIAIAyhdpybptnQfzwei3hE6OLSpaVhCh4Ou6uPfgNXNjEQEIYa2GIhKIP3j8zRfbDtTVlFVkQMUHB2by6sffbDp5UtzCagQm9JG/djz8wp5GBxddj4pzsnLMTIcnsfNgftmXZnxp4USLpbXAhL70Vu8PHmsbV+Mpcngm1ETFGNIjLYcUeLCv+C9zG27/6kylKex+4WA5fl9vfsnabUAgEHV5CUpAJcqKQMwX9YTa2Mqr53oSMaTVCGZLfEVL17/R0ZWNR2VZRgZUkqwQgB5sIV9U9y1tntpQZbO0RuQJ/OHjbX9+vXNCbczppbWPp+IyhyexO134zsUnn9fcaLFhOHAnT2zcu+r5dxuTju0JDYtjRxNKbEFK7EoVvnD6hJsvPtlu0dUTuGVXavmj25PVnir3W5FcM6T21UkAZvNq6viq+xfPDTYLhwoNTYCIPenCdau3Fn09cMigtJN0YxvnPIctCERaKVx59WmTxsXCpg0CICJEXPbzbW9/0D8+Mbi/y6GnF5pK8RyeED19xdsunfXZU8dbWI0gmO598u0/vLz/sMgocyolOLrThYvOPOH6C6ZbbBgOqjy7ad99v2tvcHlPaFick5XQvQ3mMJqmJm788skAoTcMBzv/dnT0fefhbTVVwpXtL8cE1wxp+N4G0XDV+ScFf4Sd7wLEVMa/bvWW/pyfqCq3pbWPp1JkRWDoC8GC4ycC4ZYN27btTiWrKysyoBJkZZCwy/GkSQp84Nn237y4d0Jdmc93DUmlZI6waCIh8JmX3r/3ybfGl+Ny/HDg4BiaQIPa3uvL5pUny3mm62Nw5mL8wVtQRgYpUBN99yuzWvekfr/J7VON1nDmMIKABLDiquZTJif6c8ri5hbXqZTgsEg5wRUd9YnImpb5EQ99Vepllc4hjtwj5USxAdGmphSoNDVPr/3xt05LZ4sCYbTf+4iWSskcu/ZnEGzyhxToa7rsM1NavjijK5WPVJI5FaMdneFLSIKZq7XP73z6b3sRwWIiSyIqTf/5tabPNU/sSRc9gaP/EEakVErmEAjL1m/5oDcXDENC1UUERPQk/vTaeVMbqzN5NaAvZU6leI7qqHz/QG7Zui1Kk8VxbIGgNJ1QX7X6+vlEpIkQYLSfw3EvlZI5fE31NZE/b+28+zdtUqDFWefAnH569vg7F53a21+shJFtpQQHAPiKGpLRB3739nMvf+BJtDEfAn1Ni8+b/q3PT+tK58t+5tS1i/FtZeXQDKvW8ai4+WdbTj0xOX1SjcUlLRJRE9319bnb96Reaz9QWx0pg0taTIjRV7aQxRoCUARRT/T0FZes2VzwNYT/DYUglqqicvX1Z9QnYzlfY/mOXSpIVgJ8TbU13sYdXXc81iqEjbgIRKVp+qT4Q9fOzxVVGW9Ad260Ys2HjfhKNyaja59v/+2LHaWYj8/Pm/j9y+Z0p3OehOPzZke5VFzmCNBEiWrv1g1bd3SkLWY+AMATqDT9x0WzLvvsid2pQlma0/KfIf2QwxohDREhMjnVsurVTF4B2PhygaiJfrK4+bRpdemML8vOfTgnK+E/wyGjA0hpnaz2XnvnwO2Pvh7YiLDNIQIQ1MYja5ecEY/Joq+wvFbmKlRWAnylG5LRR17Y9Yu/vOtJtBiUBpa26cTaFdfM68/5ZbamX9HBAQCaqK4m8r1HX9+ys9ezGrxIgb6ii8+actMls7tTeU+WzyOtHFkZujUi8gQUlW5Z9crB/iKi5bK+0nTb5XMuXPiJA4dmTkf9KR2DUjGG1NygUpSIye27U7c+vCXwmGHbDu4GQsQHrz19xqSa/qwvysKclk8OLAVfUUNt9In/27P2f9oDmQjbQnAtWGNtbM3ShUEiKQP/4VZwWOeNo+Mrqk9E/uuxbX9r67afGVO0YGb9PVc2H+wvWFytP9YQh/1QswPF+n0SwFEbDz7NJate7krl7fTFk+gruuJfp337wk92pnJS4qg/sVKKW5nj+KKJ4lVy577+G9e9FjhTi2AMNOXORZ8697SJvf1uz5y6ZkitGV77vk/jE9FnX3rvvqcs9wQF5jTqiTUtC04YV5XNKzHsVx9rpdKHsv9cgpmxe379xl+37rczH8F865TG+OolC5XSROTo0IVlZWginli65pW9PVm7ZbnAnJ4zd8IdV3yqp68g3RQXDo4h0ETVEfl+T/aG1a8c2pAcPmF5EpWi6744c9G/Te9KObmnsHJkBUK9iq91fSLyp83v3/3EG9JqWh0AhEBN9KPF8xfMrE9lCtI19+GaIbX5jCxiA4DA93VDMnb/U23PbdprZz6CZduaKm/t0jPr4tFCUbsVHiwrHwcRVcfkTete2bWv3858BMu2MycnH7xuQTavQl8vNKpUjqzQYRfjD7cQUdTDnnS+5ad/LxS1nfkIzOkFCycvv/zU7lTOoWU5zhxHQWmqq4lsbO2845dbrc2HlKg03frVpkvOntrtzoGXSjmaQAB64I+wpaiooTa2+rm3frtxt6X5GLjO8IFrF86ZWpvO+kLgqD/Jo5aKMaSDk+E2L0paU6LKu2X9qzs6UlLY/C4TImiicYno2hvOinmi6Gsc7NVYLc55jlKwf1Eiikjsz/nXP/RSJu8LEfpWUxgwH80zxv3kmjPS2eLA2xn1R2osTnqOUKvhFhcXD4nSlIxHXn2757YNmzWR3VEmT6ImuuycaTdd0tSX9cXYPo2NJ33jydHuw7DAgY9nSkM1hTllFvzz/t5cd7rgSZtv/BHdQCj4evaUWmtTSQN9erMjhWN7ZOvMDcYEIASkMoWuVM6iekSKiMTSr6okgqiHrbt7rRvCgXitisox/vDduRgfAAA8gZGoZ1GR4JjdYUoEcas+HNEIHLsOHTdKfZMjDBGUsh/sWGExVeoizsgKM/I4OVphRgYODsaIMxfjMyMPZw7GCAcHY4RHK4wRzhyMEcdmSJmRhDMHY4Q9B2OEMwdjhIODMeLOxfjMiONxaDAmWFYYIzxaYYxw5mCM8AwpY4RlhTHCssIY4eBgjLCsMEbYkDJGWFYYIxwcjBFvLJwuZMYmnDkYI2xIGSM8lGWMsKwwRjg4GCMsK4wRNqSMEZYVxgjLCmOEMwdjhI8mMEbYkDJG2HMwRthzMEY4OBgjLCuMETakjBGWFcYIywpjhDMHY4SDgzHyDxNeRFzY22i3AAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiS1JPTUEgQ1JNIiwic2hvcnRfbmFtZSI6IktST01BIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDBkMGQiLCJ0aGVtZV9jb2xvciI6IiMyYTc4ZDYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFMUUFBQUMwQ0FJQUFBQ3lyNUZsQUFBT1JrbEVRVlI0bk8yZGZYRFUxYm5IbitlYzMrNG1tOTJFa0FBV1VNQ0NFTEVCaGRFNnJkNTdXKzFvcDFXblZUdHpwUytpVmcxNDBhcGx0TzJ0ZDV6eHBiMFZSY3RySzZPZDZ0UzJ2dFRXNjNScTI3bjM0dFRpQ3lBR29rWVFJZ3A1SWV3bSsvbzc1K2tmUHhMQjVraCtaeUhKMlgwK2MvN0lIemxuei83MjJlZjdQYStMVGN2ZkFJWVpDakhhSFdER0xod2NqQkVQZ0VhN0Q4d1loVE1IWThUanhNR1k0TXpCR0dIUHdSamh6TUVZNGVCZ2pIaEFMQ3ZNMEhnY0dvd0psaFhHQ0k5V0dDT2NPUmdqUEVQS0dHRlpZWXl3ckRCR09EZ1lJeXdyakJFMnBJd1JsaFhHQ0FjSFk4UWoxaFhHQUdjT3hnZ2JVc1lJRDJVWkl5d3JqQkVPRHNZSXl3cGpoQTBwWTRSbGhUSENzc0lZNGN6QkdPR2pDWXdSTnFTTUVmWWNqQkgySEl3UkRnN0dDTXNLWTRRTktXT0VaWVV4d3JMQ0dPSE13UmpoNEdDTWVNVFhQakVHT0hNd1JqZzRHQ004V21HTWVLUGRnWEFnZ2tDMHFLanBtSmtyNno0TVFrVGFoYStrU3pPa2lGQXNVcWJnSStEd1QzRUcvMXdWa2JFSWxoNGZpS0FVSE13VlEvWGhJNTN4Qk5aVXliRS9FbkFtY3lCQzBhZFAxRWRQbjVFRUFoajJWNWNJRUdISGU1bjJmWm1vSjByNFNBZ1JpejdWeGVVRjh5ZGFOa0VnQlBTay9SZmY3QzJ0TXlPQk01NURJR2J5YXQ3MHhFTlh6YmFvZnZmVHU3WSttNjVLQ2xYQ0I0SkFlVi85YU5IczgrYzFXRGNDQUl0WHRmcEt4endjNDQvZW1jd0JBOGxEYWRLYWhCaHU2bENhcE1CQ2tVcnpDZUJKN0V3VnZudlI5UFBuTlJRVkRmdjFqK2hKMUJQZmU3ejltVTJkRSt1aWFzejdEcGVDQXdBUVFRcEVnT0VIQndCSWdhVkdoc0RlZnYvODVvYWJMenBKYWZKazZQWjhUVkZQL0dyanZwKzk4TjdFdXNqWWp3eHc2V0o4QWlDeTcyMVExNm9GZ1pBdHFNbmpvaXUrZVlwQTFDRU16eUcwSmsvZzVwM3AyeDk3cTdaYWF1M0dyU2pPN0Q2bmdRSzJMdW53Rm9ZUEFoQkFVY0dLSzArWk5DNGFpRlNvRmpRQkN1eE9GMXZXYi9jVlZYdkNpYlFCUEVONlZLVEU3ajUvK1NYVHptbXE5OE5IQmhFUUVSRXMyOUQyenY1c1BDWmRpUXh3YUxRQ0FBQzZoTHBra1RzOGlUMTloUzh2YUx6aHdwTXNjZ1lBQkFibHJpZDNQcis1YzBKdDFGZWx2SVdSaGpPSGtXRHdQR05pL0wrL01ac0lNTHlwRFNMam1VMzdWejczYmtNeTZpdUh2b2NBTHMyUTJsa0cyeFlRSWJDTkt4ZlBia2hHUWcyZUF6U1JGTmphMFgvcm8yL1d4Q1E1WWtJUHh5MVpHYm5va0loZGZjVzdycGgxNXN3Nlg1TVgzbW9nNE1HTTM3S3VOVnRRTlU1WmpVRllWb2JBazlqZFY3ejA3RW5YbkRkVldVUUdnQ1pDaEZzZWFkdmUwWmVvY2pJeWdJUGpuNUVDKzNLcWFVck52WXRPSWJKWmdOV2FwTUQ3Zi8vdVUzL2ZOejRaY2M1cURGSTVzaktzMFFvQ0txMGpFbFplM1ZRYjl5eEdLRUdWUDI3dXV2ZnBkeG9TRWJlR0p4L0JOVU5hWXZXak5TSUVkUGY1SzY2Y00yOWEwbWErUzVNVTJQNUI1c1lOMjZzakFzZzlFM280TENzZjRrbnNUaGUvZnU3a1JlZE90b2dNSWdERVRGNjFyR3ROOWZ0UlQ3anBORDZFZ3dNQWdBQ0V3SFRXbno4amVlZS96OUpFRmxaREVRbUU1YjlvZS9XZGc4bTQ1N3NlR2c1ZGpFOEFWRUthSHF3K1pBdUlVRlJVRlJVUFh0MVVFNVBCV0NNVXdYQjN6UjkzUC83L2V4dHJvMFdsd1NrM055U2NPUUFBQkdJNjY5K3phUGFjS1FtbFE2ZU5ZTGo3djYwOWQvNjZ2VDRSVWM0T1R6NkNhNGIwT015QmVSSzdVb1Z2ZitIRVM4OCt3VzdSVlFyYzA1VmJ1cjQxSWhBSjNOZVRRemczbEMybDdoRFJJUVdtTXNXelp0WDk4UEpaT256T0lBSUF5aGRweWJwdG5RZnp3ZWkzaEU2T0xTcGFWaENoNE91NnVQZmdOWE5qRVFFSVlhMkdJaEtJUDNqOHpSZmJEdFRWbEZWa1FNVUhCMmJ5NnNmZmJEcDVVdHpDYWdRbTlKRy9kano4d3A1R0J4ZGRqNHB6c25MTVRJY25zZk5nZnRtWFpueHA0VVNMcGJYQWhMNzBWdThQSG1zYlYrTXBjbmdtMUVURkdOSWpMWWNVZUxDditDOXpHMjcvNmt5bEtleCs0V0E1Zmw5dmZzbmFiVUFnRUhWNUNVcEFKY3FLUU13WDlZVGEyTXFyNTNvU01hVFZDR1pMZkVWTDE3L1IwWldOUjJWWlJnWlVrcXdRZ0I1c0lWOVU5eTF0bnRwUVpiTzBSdVFKL09IamJYOSt2WE5DYmN6cHBiV1BwK0l5aHlleE8xMzR6c1VubjlmY2FMRmhPSEFuVDJ6Y3UrcjVkeHVUanUwSkRZdGpSeE5LYkVGSzdFb1Z2bkQ2aEpzdlB0bHUwZFVUdUdWWGF2bWoyNVBWbmlyM1c1RmNNNlQyMVVrQVp2TnE2dmlxK3hmUERUWUxod29OVFlDSVBlbkNkYXUzRm4wOWNNaWd0Sk4wWXh2blBJY3RDRVJhS1Z4NTlXbVR4c1hDcGcwQ0lDSkVYUGJ6Ylc5LzBEOCtNYmkveTZHbkY1cEs4UnllRUQxOXhkc3VuZlhaVThkYldJMGdtTzU5OHUwL3ZMei9zTWdvY3lvbE9MclRoWXZPUE9INkM2WmJiQmdPcWp5N2FkOTl2MnR2Y0hsUGFGaWNrNVhRdlEzbU1KcW1KbTc4OHNrQW9UY01CenYvZG5UMGZlZmhiVFZWd3BYdEw4Y0Uxd3hwK040RzBYRFYrU2NGZjRTZDd3TEVWTWEvYnZXVy9weWZxQ3EzcGJXUHAxSmtSV0RvQzhHQzR5Y0M0WllOMjdidFRpV3JLeXN5b0JKa1paQ3d5L0drU1FwODRObjIzN3k0ZDBKZG1jOTNEVW1sWkk2d2FDSWg4Sm1YM3IvM3liZkdsK055L0hEZzRCaWFRSVBhM3V2TDVwVW55M21tNjJOdzVtTDh3VnRRUmdZcFVCTjk5eXV6V3Zla2ZyL0o3Vk9OMW5EbU1JS0FCTERpcXVaVEppZjZjOHJpNWhiWHFaVGdzRWc1d1JVZDlZbkltcGI1RVE5OVZlcGxsYzRoanR3ajVVU3hBZEdtcGhTb05EVlByLzN4dDA1TFo0c0NZYlRmKzRpV1Nza2N1L1puRUd6eWh4VG9hN3JzTTFOYXZqaWpLNVdQVkpJNUZhTWRuZUZMU0lLWnE3WFA3M3o2YjNzUndXSWlTeUlxVGYvNXRhYlBOVS9zU1JjOWdhUC9FRWFrVkVybUVBakwxbS81b0RjWERFTkMxVVVFUlBRay92VGFlVk1icXpONU5hQXZaVTZsZUk3cXFIei9RRzdadWkxS2s4VnhiSUdnTkoxUVg3WDYrdmxFcElrUVlMU2Z3M0V2bFpJNWZFMzFOWkUvYisyOCt6ZHRVcURGV2VmQW5INTY5dmc3RjUzYTIxK3NoSkZ0cFFRSEFQaUtHcExSQjM3MzluTXZmK0JKdERFZkFuMU5pOCtiL3EzUFQrdEs1OHQrNXRTMWkvRnRaZVhRREt2VzhhaTQrV2RiVGoweE9YMVNqY1VsTFJKUkU5MzE5Ym5iOTZSZWF6OVFXeDBwZzB0YVRJalJWN2FReFJvQ1VBUlJUL1QwRlplczJWendOWVQvRFlVZ2xxcWljdlgxWjlRbll6bGZZL21PWFNwSVZnSjhUYlUxM3NZZFhYYzgxaXFFamJnSVJLVnArcVQ0UTlmT3p4VlZHVzlBZDI2MFlzMkhqZmhLTnlhamE1OXYvKzJMSGFXWWo4L1BtL2o5eStaMHAzT2VoT1B6WmtlNVZGem1DTkJFaVdydjFnMWJkM1NrTFdZK0FNQVRxRFQ5eDBXekx2dnNpZDJwUWxtYTAvS2ZJZjJRd3hvaERSRWhNam5Wc3VyVlRGNEIyUGh5Z2FpSmZySzQrYlJwZGVtTUw4dk9mVGduSytFL3d5R2pBMGhwbmF6Mlhudm53TzJQdmg3WWlMRE5JUUlRMU1ZamE1ZWNFWS9Kb3Erd3ZGYm1LbFJXQW55bEc1TFJSMTdZOVl1L3ZPdEp0QmlVQnBhMjZjVGFGZGZNNjgvNVpiYW1YOUhCQVFDYXFLNG04cjFIWDkreXM5ZXpHcnhJZ2I2aWk4K2FjdE1sczd0VGVVK1d6eU90SEZrWnVqVWk4Z1FVbFc1WjljckIvaUtpNWJLKzBuVGI1WE11WFBpSkE0ZG1Ua2Y5S1IyRFVqR0cxTnlnVXBTSXllMjdVN2MrdkNYd21HSGJEdTRHUXNRSHJ6MTl4cVNhL3F3dnlzS2NsazhPTEFWZlVVTnQ5SW4vMjdQMmY5b0RtUWpiUW5BdFdHTnRiTTNTaFVFaUtRUC80Vlp3V09lTm8rTXJxazlFL3V1eGJYOXI2N2FmR1ZPMFlHYjlQVmMySCt3dldGeXRQOVlRaC8xUXN3UEYrbjBTd0ZFYkR6N05KYXRlN2tybDdmVEZrK2dydXVKZnAzMzd3azkycG5KUzRxZy9zVktLVzVuaitLS0o0bFZ5NTc3K0c5ZTlGamhUaTJBTU5PWE9SWjg2OTdTSnZmMXV6NXk2WmtpdEdWNzd2ay9qRTlGblgzcnZ2cWNzOXdRRjVqVHFpVFV0QzA0WVY1WE5LekhzVng5cnBkS0hzdjljZ3BteGUzNzl4bCszN3Jjekg4Rjg2NVRHK09vbEM1WFNST1RvMElWbFpXZ2lubGk2NXBXOVBWbTdaYm5Bbko0emQ4SWRWM3lxcDY4ZzNSUVhEbzRoMEVUVkVmbCtUL2FHMWE4YzJwQWNQbUY1RXBXaTY3NDRjOUcvVGU5S09ibW5zSEprQlVLOWlxOTFmU0x5cDgzdjMvM0VHOUpxV2gwQWhFQk45S1BGOHhmTXJFOWxDdEkxOStHYUliWDVqQ3hpQTREQTkzVkRNbmIvVTIzUGJkcHJaejZDWmR1YUttL3QwalByNHRGQ1Vic1ZIaXdySHdjUlZjZmtUZXRlMmJXdjM4NThCTXUyTXljbkg3eHVRVGF2UWw4dk5LcFVqcXpRWVJmakQ3Y1FVZFREbm5TKzVhZC9MeFMxbmZrSXpPa0ZDeWN2di96VTdsVE9vV1U1emh4SFFXbXFxNGxzYk8yODQ1ZGJyYzJIbEtnMDNmclZwa3ZPbnRydHpvR1hTam1hUUFCNjRJK3dwYWlvb1RhMitybTNmcnR4dDZYNUdMak84SUZyRjg2Wldwdk8ra0xncUQvSm81YUtNYVNEaytFMkwwcGFVNkxLdTJYOXF6czZVbExZL0M0VEltaWljWW5vMmh2T2lubWk2R3NjN05WWUxjNTVqbEt3ZjFFaWlranN6L25YUC9SU0p1OExFZnBXVXhnd0g4MHp4djNrbWpQUzJlTEEyeG4xUjJvc1RucU9VS3ZoRmhjWEQ0blNsSXhIWG4yNzU3WU5teldSM1ZFbVQ2SW11dXljYVRkZDB0U1g5Y1hZUG8yTkozM2p5ZEh1dzdEQWdZOW5Ta00xaFRsbEZ2enovdDVjZDdyZ1NadHYvQkhkUUNqNGV2YVVXbXRUU1FOOWVyTWpoV043Wk92TURjWUVJQVNrTW9XdVZNNmlla1NLaU1UU3I2b2tncWlIcmJ0N3JSdkNnWGl0aXNveC92RGR1UmdmQUFBOGdaR29aMUdSNEpqZFlVb0VjYXMrSE5FSUhMc09IVGRLZlpNakRCR1VzaC9zV0dFeFZlb2l6c2dLTS9JNE9WcGhSZ1lPRHNhSU14ZmpNeU1QWnc3R0NBY0hZNFJISzR3UnpoeU1FY2RtU0ptUmhETUhZNFE5QjJPRU13ZGpoSU9ETWVMT3hmak1pT054YURBbVdGWVlJenhhWVl4dzVtQ004QXdwWTRSbGhUSENzc0lZNGVCZ2pMQ3NNRWJZa0RKR1dGWVlJeHdjakJGdkxKd3VaTVltbkRrWUkyeElHU004bEdXTXNLd3dSamc0R0NNc0s0d1JOcVNNRVpZVnhnakxDbU9FTXdkamhJOG1NRWJZa0RKRzJITXdSdGh6TUVZNE9CZ2pMQ3VNRVRha2pCR1dGY1lJeXdwamhETUhZNFNEZ3pIeUR4TmVSRnpZMjJpM0FBQUFBRWxGVGtTdVFtQ0MiLCJzaXplcyI6IjE4MHgxODAiLCJ0eXBlIjoiaW1hZ2UvcG5nIn1dfQ==">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="KROMA">
+<meta name="theme-color" content="#2a78d6">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --surface-2:      #ffffff;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --border-strong:  rgba(11,11,11,0.16);
+
+    --status-good:     #0ca30c;
+    --status-warning:  #fab219;
+    --status-serious:  #ec835a;
+    --status-critical: #d03b3b;
+
+    --stage-1: #2a78d6; /* Pendiente */
+    --stage-2: #eb6834; /* Pre-producción */
+    --stage-3: #1baf7a; /* Rodaje */
+    --stage-4: #eda100; /* Edición */
+    --stage-5: #e87ba4; /* Revisión cliente */
+    --stage-6: #4a3aa7; /* Correcciones */
+    --stage-7: #008300; /* Entregado */
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --surface-2:      #202020;
+    --page-plane:     #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --border:         rgba(255,255,255,0.10);
+    --border-strong:  rgba(255,255,255,0.18);
+
+    --stage-1: #3987e5;
+    --stage-2: #d95926;
+    --stage-3: #199e70;
+    --stage-4: #c98500;
+    --stage-5: #d55181;
+    --stage-6: #9085e9;
+    --stage-7: #008300;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page-plane);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .hidden { display: none !important; }
+
+  /* ---------- Auth screens ---------- */
+  .auth-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .auth-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--surface-1);
+    border: 1px solid var(--gridline);
+    border-radius: 14px;
+    padding: 30px 28px;
+  }
+  .auth-logo { font-weight: 800; font-size: 22px; letter-spacing: .06em; margin-bottom: 4px; }
+  .auth-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 22px; }
+  .auth-error {
+    background: color-mix(in srgb, var(--status-critical) 14%, transparent);
+    color: var(--status-critical);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .auth-note { font-size: 12px; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
+  .sync-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--status-good);
+    margin-bottom: 14px;
+  }
+  .sync-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--status-good); }
+
+  /* ---------- Header ---------- */
+  header.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--gridline);
+    background: var(--surface-1);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .logo { font-weight: 800; font-size: 20px; letter-spacing: 0.06em; }
+  .brand .tag { font-size: 13px; color: var(--text-secondary); }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  button, select, input {
+    font-family: inherit;
+    font-size: 13.5px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-2);
+    color: var(--text-primary);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--gridline); }
+  .btn-primary { background: var(--stage-1); border-color: var(--stage-1); color: #fff; }
+  .btn-primary:hover { filter: brightness(1.06); }
+  .btn-block { width: 100%; justify-content: center; }
+  .btn-ghost { border-color: transparent; background: transparent; color: var(--text-secondary); }
+  .btn-ghost:hover { background: var(--gridline); }
+  .btn-danger { color: var(--status-critical); border-color: var(--status-critical); background: transparent; }
+  .btn-danger:hover { background: color-mix(in srgb, var(--status-critical) 12%, transparent); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  main { padding: 24px 28px 64px; max-width: 1400px; margin: 0 auto; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .stat-tile { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 12px; padding: 16px 18px; }
+  .stat-tile .label { font-size: 12.5px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .stat-tile .value { font-size: 28px; font-weight: 700; font-variant-numeric: proportional-nums; }
+  .stat-tile .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 18px; }
+  .toolbar input[type="search"] {
+    padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-strong);
+    background: var(--surface-2); color: var(--text-primary); min-width: 240px;
+  }
+  .toolbar select { padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text-primary); }
+  .spacer { flex: 1; }
+  .view-toggle { display: flex; border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; }
+  .view-toggle button { border: none; background: var(--surface-2); color: var(--text-secondary); padding: 8px 14px; cursor: pointer; }
+  .view-toggle button.active { background: var(--stage-1); color: #fff; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; font-size: 12.5px; color: var(--text-secondary); }
+  .legend .item { display: flex; align-items: center; gap: 6px; }
+
+  .board { display: grid; grid-auto-flow: column; grid-auto-columns: 260px; gap: 14px; overflow-x: auto; padding-bottom: 12px; }
+  .column { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 12px; display: flex; flex-direction: column; min-height: 160px; }
+  .column-head { display: flex; align-items: center; gap: 8px; padding: 12px 12px 10px; border-bottom: 1px solid var(--gridline); font-weight: 600; font-size: 13px; }
+  .column-head .count { margin-left: auto; font-weight: 500; color: var(--text-muted); font-size: 12px; }
+  .column-body { flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 60px; }
+  .column-body.drag-over { background: var(--gridline); border-radius: 0 0 12px 12px; }
+
+  .card { background: var(--surface-2); border: 1px solid var(--gridline); border-radius: 10px; padding: 10px 12px; cursor: grab; box-shadow: 0 1px 2px rgba(11,11,11,0.04); }
+  .card:active { cursor: grabbing; }
+  .card .title { font-weight: 600; font-size: 13.5px; margin-bottom: 3px; }
+  .card .client { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  .card .meta-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .badge { font-size: 11px; padding: 3px 7px; border-radius: 999px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; white-space: nowrap; }
+  .badge-good     { background: color-mix(in srgb, var(--status-good) 16%, transparent); color: var(--status-good); }
+  .badge-warning  { background: color-mix(in srgb, var(--status-warning) 22%, transparent); color: #8a5a00; }
+  :root[data-theme="dark"] .badge-warning { color: var(--status-warning); }
+  .badge-serious  { background: color-mix(in srgb, var(--status-serious) 20%, transparent); color: #a03d1c; }
+  :root[data-theme="dark"] .badge-serious { color: var(--status-serious); }
+  .badge-critical { background: color-mix(in srgb, var(--status-critical) 16%, transparent); color: var(--status-critical); }
+  .badge-neutral  { background: var(--gridline); color: var(--text-secondary); }
+
+  .priority-flag { font-size: 11px; font-weight: 700; letter-spacing: .02em; }
+  .priority-alta { color: var(--status-critical); }
+  .priority-media { color: #8a5a00; }
+  :root[data-theme="dark"] .priority-media { color: var(--status-warning); }
+  .priority-baja { color: var(--text-muted); }
+
+  .table-wrap { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 12px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--text-muted); padding: 10px 14px; border-bottom: 1px solid var(--gridline);
+    cursor: pointer; user-select: none; white-space: nowrap;
+  }
+  thead th:hover { color: var(--text-primary); }
+  tbody td { padding: 11px 14px; border-bottom: 1px solid var(--gridline); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--gridline); cursor: pointer; }
+  .stage-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; }
+  .owner-note { font-size: 11px; color: var(--text-muted); }
+
+  .empty-state {
+    text-align: center; padding: 70px 20px; color: var(--text-secondary);
+    border: 1px dashed var(--border-strong); border-radius: 14px; background: var(--surface-1);
+  }
+  .empty-state h3 { margin: 10px 0 6px; color: var(--text-primary); font-size: 17px; }
+  .empty-state p { margin: 0 0 18px; font-size: 13.5px; }
+
+  .overlay {
+    position: fixed; inset: 0; background: rgba(11,11,11,0.45);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+  }
+  .modal {
+    background: var(--surface-1); border-radius: 14px; width: 100%; max-width: 520px;
+    max-height: 90vh; overflow-y: auto; padding: 24px; border: 1px solid var(--gridline);
+  }
+  .modal h2 { margin: 0 0 18px; font-size: 17px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 5px; color: var(--text-secondary); }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--border-strong);
+    background: var(--surface-2); color: var(--text-primary);
+  }
+  .field textarea { min-height: 64px; resize: vertical; font-family: inherit; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .modal-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 8px; }
+  .modal-actions .right { display: flex; gap: 8px; }
+
+  .note { font-size: 12px; color: var(--text-muted); margin: 0 0 20px; }
+  input[type="file"] { display: none; }
+
+  .user-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px 6px 6px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    font-size: 13px;
+  }
+  .user-avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--stage-1); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+  }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--text-primary); color: var(--page-plane);
+    padding: 10px 18px; border-radius: 8px; font-size: 13px; z-index: 200;
+    max-width: 90vw; text-align: center;
+  }
+
+  @media (max-width: 760px) {
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+    .cobro-row { flex-direction: column; align-items: stretch !important; }
+    main { padding: 18px 14px 48px; }
+    header.topbar { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+    .topbar-actions { flex-wrap: wrap; row-gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ---------- Pantalla de login ---------- -->
+<div id="loginScreen" class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-logo">KROMA</div>
+    <div class="sync-pill"><span class="dot"></span>Sincronizado en la nube — Mac, iPhone, iPad</div>
+    <div class="auth-sub">Inicia sesión para entrar al CRM</div>
+    <div id="loginError" class="auth-error hidden"></div>
+    <form id="loginForm">
+      <div class="field">
+        <label>Usuario</label>
+        <select id="loginUsername" required>
+          <option value="" disabled selected>Selecciona tu usuario</option>
+          <option value="iusseff">Iusseff Madrid</option>
+          <option value="yeilyn">Yeilyn Villanero</option>
+          <option value="contabilidad">Contabilidad</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn">Entrar</button>
+    </form>
+    <button type="button" class="btn btn-ghost btn-block" id="forgotPwLink" style="margin-top:10px;">¿Olvidaste tu contraseña?</button>
+    <p class="auth-note">Los datos se guardan en la nube (Supabase): al iniciar sesión desde cualquier dispositivo verás los mismos proyectos, en tiempo real.</p>
+  </div>
+</div>
+
+<!-- ---------- Pantalla forzada de cambio de contraseña ---------- -->
+<div id="changePwScreen" class="auth-wrap hidden">
+  <div class="auth-card">
+    <div class="auth-logo">KROMA</div>
+    <div class="auth-sub">Por seguridad, define tu contraseña definitiva antes de continuar</div>
+    <div id="changePwError" class="auth-error hidden"></div>
+    <form id="changePwForm">
+      <div class="field">
+        <label>Contraseña temporal actual</label>
+        <input type="password" id="cpCurrent" autocomplete="current-password" required>
+      </div>
+      <div class="field">
+        <label>Nueva contraseña (mínimo 8 caracteres)</label>
+        <input type="password" id="cpNew" autocomplete="new-password" required minlength="8">
+      </div>
+      <div class="field">
+        <label>Repite la nueva contraseña</label>
+        <input type="password" id="cpConfirm" autocomplete="new-password" required minlength="8">
+      </div>
+      <div class="field">
+        <label>PIN de recuperación (mínimo 6 caracteres)</label>
+        <input type="text" id="cpPin" required minlength="6" placeholder="Solo tú lo debes conocer">
+      </div>
+      <p class="auth-note" style="margin-top:0;">Este PIN te sirve para restablecer tu contraseña sin depender de nadie más si la olvidas. Elige uno que no uses en otro lado.</p>
+      <button type="submit" class="btn btn-primary btn-block">Guardar y continuar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ---------- App principal ---------- -->
+<div id="appRoot" class="hidden">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">KROMA</span>
+      <span class="tag">CRM de producción · edición · entrega</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="themeToggle" title="Cambiar tema">🌓</button>
+      <button class="btn" id="reportsBtn">📊 Reportes</button>
+      <button class="btn" id="exportBtn">⭳ Exportar</button>
+      <button class="btn btn-primary" id="newProjectBtn">+ Nuevo proyecto</button>
+      <div class="user-chip">
+        <span class="user-avatar" id="userAvatar">?</span>
+        <span id="userName">—</span>
+      </div>
+      <button class="btn btn-ghost" id="changePwBtn" title="Cambiar contraseña">🔑</button>
+      <button class="btn btn-ghost" id="changePinBtn" title="Cambiar PIN de recuperación">🔒 PIN</button>
+      <button class="btn btn-ghost" id="logoutBtn" title="Cerrar sesión">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <p class="note">Los proyectos viven en la nube (Supabase) y se sincronizan en tiempo real entre iusseff y yeilyn en cualquier dispositivo. <strong>Exportar</strong> descarga un respaldo puntual en JSON.</p>
+
+    <section class="stat-row">
+      <div class="stat-tile">
+        <div class="label"><span class="dot" style="background:var(--stage-1)"></span>Proyectos activos</div>
+        <div class="value" id="statActive">0</div>
+        <div class="sub">sin contar entregados</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label"><span class="dot" style="background:var(--status-warning)"></span>Vencen esta semana</div>
+        <div class="value" id="statSoon">0</div>
+        <div class="sub">entrega en 7 días o menos</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label"><span class="dot" style="background:var(--status-critical)"></span>Vencidos</div>
+        <div class="value" id="statOverdue">0</div>
+        <div class="sub">fecha de entrega ya pasó</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label"><span class="dot" style="background:var(--stage-4)"></span>Por cobrar</div>
+        <div class="value" id="statPending">$0</div>
+        <div class="sub">presupuesto pendiente / parcial</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label"><span class="dot" style="background:var(--status-good)"></span>Cobrado este mes</div>
+        <div class="value" id="statCollectedMonth">$0</div>
+        <div class="sub">suma de cobros registrados</div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <input type="search" id="searchInput" placeholder="Buscar proyecto o cliente…">
+      <select id="filterPriority">
+        <option value="">Toda prioridad</option>
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="baja">Baja</option>
+      </select>
+      <select id="filterPago">
+        <option value="">Todo estado de pago</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="parcial">Parcial</option>
+        <option value="pagado">Pagado</option>
+      </select>
+      <div class="spacer"></div>
+      <div class="view-toggle">
+        <button id="viewKanbanBtn" class="active">Tablero</button>
+        <button id="viewTableBtn">Lista</button>
+      </div>
+    </div>
+
+    <div class="legend" id="legend"></div>
+
+    <div id="emptyState" class="empty-state hidden">
+      <h3>Todavía no hay proyectos</h3>
+      <p>Agrega el primer proyecto real para empezar a llevar el flujo de KROMA.</p>
+      <button class="btn btn-primary" id="emptyAddBtn">+ Agregar proyecto</button>
+    </div>
+
+    <div id="boardView" class="board"></div>
+
+    <div id="tableView" class="table-wrap hidden">
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="nombre">Proyecto</th>
+            <th data-sort="cliente">Cliente</th>
+            <th data-sort="etapa">Etapa</th>
+            <th data-sort="fechaEntrega">Entrega</th>
+            <th data-sort="prioridad">Prioridad</th>
+            <th data-sort="presupuesto">Presupuesto</th>
+            <th data-sort="estadoPago">Pago</th>
+            <th>Tiempo</th>
+            <th>Última edición</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- ---------- Modal alta/edición de proyecto ---------- -->
+<div class="overlay hidden" id="overlay">
+  <div class="modal">
+    <h2 id="modalTitle">Nuevo proyecto</h2>
+    <form id="projectForm">
+      <div class="field">
+        <label>Nombre del proyecto</label>
+        <input type="text" id="fNombre" required placeholder="Ej. Comercial Café Andino">
+      </div>
+      <div class="field">
+        <label>Cliente</label>
+        <input type="text" id="fCliente" placeholder="Ej. Café Andino S.A.">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Etapa</label>
+          <select id="fEtapa"></select>
+        </div>
+        <div class="field">
+          <label>Fecha de entrega</label>
+          <input type="date" id="fFecha" required>
+        </div>
+      </div>
+      <div class="field hidden" id="timerBox">
+        <label>Cronómetro</label>
+        <div style="display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border-strong); border-radius:8px; background:var(--surface-2);">
+          <button type="button" class="btn btn-ghost" id="timerToggleBtn">▶ Iniciar</button>
+          <span id="timerTotalDisplay" style="font-variant-numeric:tabular-nums; font-weight:600;">0:00:00</span>
+        </div>
+        <div id="timerByStage" style="margin-top:8px; font-size:12px; color:var(--text-muted); line-height:1.6;"></div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Prioridad</label>
+          <select id="fPrioridad">
+            <option value="alta">Alta</option>
+            <option value="media" selected>Media</option>
+            <option value="baja">Baja</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Estado de pago</label>
+          <select id="fPago">
+            <option value="pendiente">Pendiente</option>
+            <option value="parcial">Parcial</option>
+            <option value="pagado">Pagado</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Presupuesto (USD)</label>
+        <input type="number" id="fPresupuesto" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <div class="field-row hidden" id="abonoRow">
+        <div class="field">
+          <label>Monto abonado (USD)</label>
+          <input type="number" id="fAbonado" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="field">
+          <label>Monto restante</label>
+          <div id="fRestante" style="padding:9px 11px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text-secondary);">$0</div>
+        </div>
+      </div>
+      <div class="field hidden cobro-row" id="cobroRow" style="display:flex; align-items:flex-end; gap:10px;">
+        <div class="field" style="flex:0 0 150px; margin-bottom:0;">
+          <label>Registrar cobro</label>
+          <input type="date" id="fCobroFecha">
+        </div>
+        <div class="field" style="flex:1; margin-bottom:0;">
+          <label>Monto cobrado (USD)</label>
+          <input type="number" id="fCobroMonto" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <button type="button" class="btn btn-primary" id="cobroAddBtn" style="white-space:nowrap;">+ Agregar</button>
+      </div>
+      <div class="field">
+        <label>Notas / enlaces</label>
+        <textarea id="fNotas" placeholder="Referencias, link a Drive, comentarios…"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-danger hidden" id="deleteBtn">Eliminar</button>
+        <div class="right">
+          <button type="button" class="btn btn-ghost" id="cancelBtn">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ---------- Modal cambiar contraseña (desde la app, no forzado) ---------- -->
+<div class="overlay hidden" id="pwOverlay">
+  <div class="modal" style="max-width:420px;">
+    <h2>Cambiar contraseña</h2>
+    <div id="pwModalError" class="auth-error hidden"></div>
+    <form id="pwModalForm">
+      <div class="field">
+        <label>Contraseña actual</label>
+        <input type="password" id="pwCurrent" required>
+      </div>
+      <div class="field">
+        <label>Nueva contraseña (mínimo 8 caracteres)</label>
+        <input type="password" id="pwNew" required minlength="8">
+      </div>
+      <div class="modal-actions">
+        <div></div>
+        <div class="right">
+          <button type="button" class="btn btn-ghost" id="pwCancelBtn">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ---------- Modal cambiar PIN de recuperación (desde la app) ---------- -->
+<div class="overlay hidden" id="pinOverlay">
+  <div class="modal" style="max-width:420px;">
+    <h2>Cambiar PIN de recuperación</h2>
+    <p class="note" style="margin-top:-8px;">Este PIN te permite restablecer tu contraseña sin depender de nadie más si la olvidas.</p>
+    <div id="pinModalError" class="auth-error hidden"></div>
+    <form id="pinModalForm">
+      <div class="field">
+        <label>Nuevo PIN (mínimo 6 caracteres)</label>
+        <input type="text" id="pinNew" required minlength="6">
+      </div>
+      <div class="modal-actions">
+        <div></div>
+        <div class="right">
+          <button type="button" class="btn btn-ghost" id="pinCancelBtn">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ---------- Modal olvidé mi contraseña (restablecer con PIN) ---------- -->
+<div class="overlay hidden" id="forgotOverlay">
+  <div class="modal" style="max-width:420px;">
+    <h2>Restablecer contraseña</h2>
+    <p class="note" style="margin-top:-8px;">Usa tu PIN de recuperación para fijar una contraseña nueva.</p>
+    <div id="forgotModalError" class="auth-error hidden"></div>
+    <div id="forgotModalSuccess" class="sync-pill hidden" style="color:var(--status-good);"><span class="dot" style="background:var(--status-good);"></span>Contraseña actualizada — ya puedes iniciar sesión.</div>
+    <form id="forgotModalForm">
+      <div class="field">
+        <label>Usuario</label>
+        <select id="forgotUsername" required>
+          <option value="" disabled selected>Selecciona tu usuario</option>
+          <option value="iusseff">Iusseff Madrid</option>
+          <option value="yeilyn">Yeilyn Villanero</option>
+          <option value="contabilidad">Contabilidad</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>PIN de recuperación</label>
+        <input type="text" id="forgotPin" required>
+      </div>
+      <div class="field">
+        <label>Nueva contraseña (mínimo 8 caracteres)</label>
+        <input type="password" id="forgotNewPassword" required minlength="8">
+      </div>
+      <div class="modal-actions">
+        <div></div>
+        <div class="right">
+          <button type="button" class="btn btn-ghost" id="forgotCancelBtn">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="forgotSubmitBtn">Restablecer</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ---------- Modal de reportes de cobros ---------- -->
+<div class="overlay hidden" id="reportsOverlay">
+  <div class="modal" style="max-width:480px;">
+    <h2>Reporte de cobros</h2>
+    <p class="note" style="margin-top:-8px;">Suma de los cobros registrados por mes, según la fecha de cada uno.</p>
+    <div class="field">
+      <label>Año</label>
+      <select id="reportYear"></select>
+    </div>
+    <div class="table-wrap" style="margin-bottom:16px;">
+      <table>
+        <thead><tr><th>Mes</th><th>Total cobrado</th></tr></thead>
+        <tbody id="reportTableBody"></tbody>
+      </table>
+    </div>
+    <div class="modal-actions">
+      <div></div>
+      <div class="right">
+        <button type="button" class="btn btn-ghost" id="reportsCancelBtn">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="reportsDownloadBtn">⭳ Descargar Excel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- Supabase ---------------- */
+
+  var SUPABASE_URL = "https://hymqhjuritugqhwimfnm.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5bXFoanVyaXR1Z3Fod2ltZm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNTA1MzUsImV4cCI6MjEwMjYyNjUzNX0.PGPwj6DUuDxGrouuAvjbGM0bpdiIBr4WiSvkj5ftF8c";
+  var EMAIL_DOMAIN = "@kroma.local";
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  var STAGES = [
+    { id: "pendiente",    label: "Pendiente",         color: "var(--stage-1)" },
+    { id: "preprod",      label: "Pre-producción",    color: "var(--stage-2)" },
+    { id: "rodaje",       label: "Rodaje",            color: "var(--stage-3)" },
+    { id: "edicion",      label: "Edición",           color: "var(--stage-4)" },
+    { id: "revision",     label: "Revisión cliente",  color: "var(--stage-5)" },
+    { id: "correcciones", label: "Correcciones",      color: "var(--stage-6)" },
+    { id: "entregado",    label: "Entregado",         color: "var(--stage-7)" }
+  ];
+
+  var state = {
+    projects: [],
+    currentUser: null,   // { id, name, role, mustChangePassword, meta }
+    view: "kanban",
+    search: "",
+    filterPriority: "",
+    filterPago: "",
+    sortKey: "fechaEntrega",
+    sortDir: "asc"
+  };
+
+  var els = {};
+  [
+    "loginScreen", "loginForm", "loginUsername", "loginPassword", "loginError", "loginSubmitBtn",
+    "forgotPwLink",
+    "changePwScreen", "changePwForm", "cpCurrent", "cpNew", "cpConfirm", "cpPin", "changePwError",
+    "appRoot", "statActive", "statSoon", "statOverdue", "statPending", "statCollectedMonth", "searchInput",
+    "filterPriority", "filterPago", "viewKanbanBtn", "viewTableBtn", "legend", "emptyState",
+    "emptyAddBtn", "boardView", "tableView", "tableBody", "overlay", "modalTitle",
+    "projectForm", "fNombre", "fCliente", "fEtapa", "fFecha", "fPrioridad", "fPago",
+    "fPresupuesto", "abonoRow", "fAbonado", "fRestante",
+    "cobroRow", "fCobroFecha", "fCobroMonto", "cobroAddBtn",
+    "timerBox", "timerToggleBtn", "timerTotalDisplay", "timerByStage",
+    "fNotas", "deleteBtn", "cancelBtn", "newProjectBtn", "exportBtn",
+    "reportsBtn", "reportsOverlay", "reportYear", "reportTableBody", "reportsCancelBtn", "reportsDownloadBtn",
+    "themeToggle", "userAvatar", "userName", "changePwBtn", "changePinBtn", "logoutBtn",
+    "pwOverlay", "pwModalForm", "pwCurrent", "pwNew", "pwModalError", "pwCancelBtn",
+    "pinOverlay", "pinModalForm", "pinNew", "pinModalError", "pinCancelBtn",
+    "forgotOverlay", "forgotModalForm", "forgotUsername", "forgotPin", "forgotNewPassword",
+    "forgotModalError", "forgotModalSuccess", "forgotCancelBtn", "forgotSubmitBtn",
+    "toast"
+  ].forEach(function (id) { els[id] = document.getElementById(id); });
+
+  var editingId = null;
+  var realtimeChannel = null;
+
+  /* ---------------- Helpers de dominio ---------------- */
+
+  function stageById(id) {
+    for (var i = 0; i < STAGES.length; i++) if (STAGES[i].id === id) return STAGES[i];
+    return STAGES[0];
+  }
+
+  function daysUntil(dateStr) {
+    if (!dateStr) return null;
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var target = new Date(dateStr + "T00:00:00");
+    return Math.round((target - today) / 86400000);
+  }
+
+  function urgency(project) {
+    if (project.etapa === "entregado") return { key: "good", label: "Entregado" };
+    var d = daysUntil(project.fechaEntrega);
+    if (d === null) return { key: "neutral", label: "Sin fecha" };
+    if (d < 0) return { key: "critical", label: "Vencido hace " + Math.abs(d) + "d" };
+    if (d === 0) return { key: "critical", label: "Vence hoy" };
+    if (d <= 3) return { key: "serious", label: "En " + d + "d" };
+    if (d <= 7) return { key: "warning", label: "En " + d + "d" };
+    return { key: "good", label: "En " + d + "d" };
+  }
+
+  function money(n) {
+    n = Number(n) || 0;
+    return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+
+  function priorityLabel(p) { return { alta: "Alta", media: "Media", baja: "Baja" }[p] || p; }
+  function pagoLabel(p) { return { pendiente: "Pendiente", parcial: "Parcial", pagado: "Pagado" }[p] || p; }
+  function initials(name) { return String(name || "?").trim().slice(0, 2).toUpperCase(); }
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function showToast(msg) {
+    els.toast.textContent = msg;
+    els.toast.classList.remove("hidden");
+    setTimeout(function () { els.toast.classList.add("hidden"); }, 2600);
+  }
+
+  /* ---------------- Mapeo DB <-> App ---------------- */
+
+  function fromDb(row) {
+    return {
+      id: row.id,
+      nombre: row.nombre,
+      cliente: row.cliente || "",
+      etapa: row.etapa || "pendiente",
+      fechaEntrega: row.fecha_entrega || "",
+      prioridad: row.prioridad || "media",
+      estadoPago: row.estado_pago || "pendiente",
+      presupuesto: Number(row.presupuesto) || 0,
+      montoAbonado: Number(row.monto_abonado) || 0,
+      pagos: Array.isArray(row.pagos) ? row.pagos : [],
+      timerRunning: !!row.timer_running,
+      timerStartedAt: row.timer_started_at || null,
+      timeByStage: row.time_by_stage || {},
+      notas: row.notas || "",
+      createdBy: row.created_by_name || "",
+      createdAt: row.created_at,
+      updatedBy: row.updated_by_name || "",
+      updatedAt: row.updated_at
+    };
+  }
+
+  function formToDbPayload(form) {
+    return {
+      nombre: form.nombre,
+      cliente: form.cliente,
+      etapa: form.etapa,
+      fecha_entrega: form.fechaEntrega || null,
+      prioridad: form.prioridad,
+      estado_pago: form.estadoPago,
+      presupuesto: form.presupuesto,
+      monto_abonado: form.montoAbonado,
+      notas: form.notas
+    };
+  }
+
+  function restanteDe(p) {
+    var presupuesto = Number(p.presupuesto) || 0;
+    var abonado = Number(p.montoAbonado) || 0;
+    return Math.max(0, presupuesto - abonado);
+  }
+
+  /* ---------------- Cronómetro por etapa ---------------- */
+
+  function timeByStageOf(p) { return p.timeByStage || {}; }
+
+  function totalElapsedSeconds(p) {
+    var total = 0;
+    var byStage = timeByStageOf(p);
+    Object.keys(byStage).forEach(function (k) { total += Number(byStage[k]) || 0; });
+    if (p.timerRunning && p.timerStartedAt) {
+      total += Math.max(0, (Date.now() - new Date(p.timerStartedAt).getTime()) / 1000);
+    }
+    return total;
+  }
+
+  function formatDuration(totalSeconds) {
+    var s = Math.max(0, Math.floor(totalSeconds));
+    var h = Math.floor(s / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var sec = s % 60;
+    return h + ":" + (m < 10 ? "0" : "") + m + ":" + (sec < 10 ? "0" : "") + sec;
+  }
+
+  // Al cambiar de etapa con el cronómetro corriendo, acumula el tiempo transcurrido
+  // en la etapa anterior. Si la etapa nueva es "entregado", el cronómetro se detiene
+  // por completo para dejar fijo el tiempo total que tomó el proyecto; si no, sigue
+  // corriendo pero reinicia el punto de partida para la etapa nueva.
+  function handleStageChangeTimer(p, newStageId) {
+    if (!p.timerRunning || !p.timerStartedAt) return null;
+    var elapsed = Math.max(0, (Date.now() - new Date(p.timerStartedAt).getTime()) / 1000);
+    var byStage = Object.assign({}, timeByStageOf(p));
+    byStage[p.etapa] = (Number(byStage[p.etapa]) || 0) + elapsed;
+    p.timeByStage = byStage;
+    var patch = { time_by_stage: byStage };
+    if (newStageId === "entregado") {
+      p.timerRunning = false;
+      p.timerStartedAt = null;
+      patch.timer_running = false;
+      patch.timer_started_at = null;
+    } else {
+      var nowIso = new Date().toISOString();
+      p.timerStartedAt = nowIso;
+      patch.timer_started_at = nowIso;
+    }
+    return patch;
+  }
+
+  function renderTimerBox(p) {
+    if (!p) return;
+    var delivered = p.etapa === "entregado";
+    els.timerToggleBtn.classList.toggle("hidden", delivered);
+    els.timerToggleBtn.textContent = p.timerRunning ? "⏸ Pausar" : "▶ Iniciar";
+    if (delivered) {
+      els.timerTotalDisplay.innerHTML = "✅ Tiempo total del proyecto: <strong>" + formatDuration(totalElapsedSeconds(p)) + "</strong>";
+    } else {
+      els.timerTotalDisplay.textContent = (p.timerRunning ? "⏱ " : "") + formatDuration(totalElapsedSeconds(p));
+    }
+    var byStage = timeByStageOf(p);
+    var rows = STAGES.map(function (s) {
+      var secs = Number(byStage[s.id]) || 0;
+      if (p.timerRunning && p.etapa === s.id) {
+        secs += Math.max(0, (Date.now() - new Date(p.timerStartedAt).getTime()) / 1000);
+      }
+      if (!secs) return "";
+      return "<div>" + escapeHtml(s.label) + ": " + formatDuration(secs) + "</div>";
+    }).join("");
+    els.timerByStage.innerHTML = rows || "Todavía no hay tiempo registrado en ninguna etapa.";
+  }
+
+  function toggleTimer(id) {
+    var p = state.projects.find(function (x) { return x.id === id; });
+    if (!p) return;
+    var who = state.currentUser;
+    var payload = { updated_by: who.id, updated_by_name: who.name, updated_at: new Date().toISOString() };
+    if (p.timerRunning) {
+      var elapsed = p.timerStartedAt ? Math.max(0, (Date.now() - new Date(p.timerStartedAt).getTime()) / 1000) : 0;
+      var byStage = Object.assign({}, timeByStageOf(p));
+      byStage[p.etapa] = (Number(byStage[p.etapa]) || 0) + elapsed;
+      p.timeByStage = byStage;
+      p.timerRunning = false;
+      p.timerStartedAt = null;
+      payload.timer_running = false;
+      payload.timer_started_at = null;
+      payload.time_by_stage = byStage;
+    } else {
+      p.timerRunning = true;
+      p.timerStartedAt = new Date().toISOString();
+      payload.timer_running = true;
+      payload.timer_started_at = p.timerStartedAt;
+    }
+    render();
+    if (editingId === id && !els.overlay.classList.contains("hidden")) renderTimerBox(p);
+    sb.from("projects").update(payload).eq("id", id).then(function (res) {
+      if (res.error) { showToast("No se pudo actualizar el cronómetro: " + res.error.message); loadProjects(); }
+    });
+  }
+
+  function tickRunningTimers() {
+    var running = state.projects.filter(function (p) { return p.timerRunning; });
+    if (!running.length) return;
+    running.forEach(function (p) {
+      var label = "⏱ " + formatDuration(totalElapsedSeconds(p));
+      document.querySelectorAll('[data-timer-display="' + p.id + '"]').forEach(function (el) { el.textContent = label; });
+    });
+    if (editingId && !els.overlay.classList.contains("hidden")) {
+      var pEdit = state.projects.find(function (x) { return x.id === editingId; });
+      if (pEdit && pEdit.timerRunning) renderTimerBox(pEdit);
+    }
+  }
+
+  /* ---------------- Rendering ---------------- */
+
+  function populateEtapaSelect() {
+    els.fEtapa.innerHTML = STAGES.map(function (s) {
+      return '<option value="' + s.id + '">' + s.label + "</option>";
+    }).join("");
+  }
+
+  function renderLegend() {
+    els.legend.innerHTML = STAGES.map(function (s) {
+      return '<span class="item"><span class="dot" style="background:' + s.color + '"></span>' + s.label + "</span>";
+    }).join("");
+  }
+
+  function filteredProjects() {
+    var q = state.search.trim().toLowerCase();
+    return state.projects.filter(function (p) {
+      if (q && !((p.nombre || "").toLowerCase().indexOf(q) > -1 || (p.cliente || "").toLowerCase().indexOf(q) > -1)) return false;
+      if (state.filterPriority && p.prioridad !== state.filterPriority) return false;
+      if (state.filterPago && p.estadoPago !== state.filterPago) return false;
+      return true;
+    });
+  }
+
+  /* ---------------- Reportes de cobros ---------------- */
+
+  var MESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+  function allPagosFlat() {
+    var out = [];
+    state.projects.forEach(function (p) {
+      (p.pagos || []).forEach(function (pg) {
+        out.push({ monto: Number(pg.monto) || 0, fecha: pg.fecha || "", proyecto: p.nombre || "", cliente: p.cliente || "", registradoPor: pg.registradoPor || "" });
+      });
+    });
+    return out;
+  }
+
+  function availableReportYears() {
+    var years = {};
+    allPagosFlat().forEach(function (pg) { var y = pg.fecha.slice(0, 4); if (y) years[y] = true; });
+    years[String(new Date().getFullYear())] = true;
+    return Object.keys(years).sort();
+  }
+
+  function monthlyTotalsForYear(year) {
+    var totals = new Array(12).fill(0);
+    allPagosFlat().forEach(function (pg) {
+      if (pg.fecha.slice(0, 4) !== year) return;
+      var m = parseInt(pg.fecha.slice(5, 7), 10) - 1;
+      if (m >= 0 && m < 12) totals[m] += pg.monto;
+    });
+    return totals;
+  }
+
+  function renderStats() {
+    var all = state.projects;
+    var active = all.filter(function (p) { return p.etapa !== "entregado"; });
+    var soon = active.filter(function (p) { var d = daysUntil(p.fechaEntrega); return d !== null && d >= 0 && d <= 7; });
+    var overdue = active.filter(function (p) { var d = daysUntil(p.fechaEntrega); return d !== null && d < 0; });
+    var pending = all.filter(function (p) { return p.estadoPago !== "pagado"; })
+      .reduce(function (sum, p) { return sum + restanteDe(p); }, 0);
+    var nowKey = new Date().toISOString().slice(0, 7);
+    var collectedThisMonth = allPagosFlat()
+      .filter(function (pg) { return pg.fecha.slice(0, 7) === nowKey; })
+      .reduce(function (sum, pg) { return sum + pg.monto; }, 0);
+
+    els.statActive.textContent = active.length;
+    els.statSoon.textContent = soon.length;
+    els.statOverdue.textContent = overdue.length;
+    els.statPending.textContent = money(pending);
+    els.statCollectedMonth.textContent = money(collectedThisMonth);
+  }
+
+  function cardHTML(p) {
+    var u = urgency(p);
+    var pr = p.prioridad || "media";
+    var pagoLine = "";
+    if (p.estadoPago === "parcial") {
+      pagoLine = '<div class="owner-note" style="margin-top:6px;">Abonado ' + money(p.montoAbonado) + " · Restante " + money(restanteDe(p)) + "</div>";
+    }
+    var timerRow;
+    if (p.etapa === "entregado") {
+      timerRow = (
+        '<div class="meta-row" style="margin-top:8px;">' +
+        '<span class="badge badge-good" data-timer-display="' + p.id + '">✅ Tiempo total: ' + formatDuration(totalElapsedSeconds(p)) + "</span>" +
+        "</div>"
+      );
+    } else {
+      var timerLabel = (p.timerRunning ? "⏱ " : "") + formatDuration(totalElapsedSeconds(p));
+      timerRow = (
+        '<div class="meta-row" style="margin-top:8px;">' +
+        '<span class="owner-note" data-timer-display="' + p.id + '">' + timerLabel + "</span>" +
+        '<button type="button" class="btn btn-ghost timer-toggle-btn" data-id="' + p.id + '" style="padding:2px 8px; font-size:12px;" title="' + (p.timerRunning ? "Pausar" : "Iniciar") + ' cronómetro">' +
+        (p.timerRunning ? "⏸" : "▶") + "</button>" +
+        "</div>"
+      );
+    }
+    return (
+      '<div class="card" draggable="true" data-id="' + p.id + '">' +
+      '<div class="title">' + escapeHtml(p.nombre) + "</div>" +
+      (p.cliente ? '<div class="client">' + escapeHtml(p.cliente) + "</div>" : '<div class="client">&nbsp;</div>') +
+      '<div class="meta-row">' +
+      '<span class="badge badge-' + u.key + '">' + u.label + "</span>" +
+      '<span class="priority-flag priority-' + pr + '">' + priorityLabel(pr).toUpperCase() + "</span>" +
+      "</div>" +
+      pagoLine +
+      timerRow +
+      "</div>"
+    );
+  }
+
+  function renderBoard() {
+    var list = filteredProjects();
+    els.boardView.innerHTML = STAGES.map(function (stage) {
+      var items = list.filter(function (p) { return p.etapa === stage.id; });
+      return (
+        '<div class="column">' +
+        '<div class="column-head"><span class="dot" style="background:' + stage.color + '"></span>' + stage.label +
+        '<span class="count">' + items.length + "</span></div>" +
+        '<div class="column-body" data-stage="' + stage.id + '">' +
+        items.map(cardHTML).join("") +
+        "</div>" +
+        "</div>"
+      );
+    }).join("");
+    bindCardEvents();
+    bindDragEvents();
+  }
+
+  function renderTable() {
+    var list = filteredProjects().slice();
+    list.sort(function (a, b) {
+      var ka = a[state.sortKey], kb = b[state.sortKey];
+      if (ka === undefined || ka === null) ka = "";
+      if (kb === undefined || kb === null) kb = "";
+      if (ka < kb) return state.sortDir === "asc" ? -1 : 1;
+      if (ka > kb) return state.sortDir === "asc" ? 1 : -1;
+      return 0;
+    });
+    els.tableBody.innerHTML = list.map(function (p) {
+      var stage = stageById(p.etapa);
+      var u = urgency(p);
+      return (
+        "<tr data-id=\"" + p.id + "\">" +
+        "<td>" + escapeHtml(p.nombre) + "</td>" +
+        "<td>" + escapeHtml(p.cliente || "—") + "</td>" +
+        '<td><span class="stage-pill"><span class="dot" style="background:' + stage.color + '"></span>' + stage.label + "</span></td>" +
+        "<td><span class=\"badge badge-" + u.key + "\">" + (p.fechaEntrega || "—") + "</span></td>" +
+        "<td><span class=\"priority-flag priority-" + (p.prioridad || "media") + "\">" + priorityLabel(p.prioridad || "media") + "</span></td>" +
+        "<td>" + money(p.presupuesto) + "</td>" +
+        "<td>" + pagoLabel(p.estadoPago || "pendiente") +
+          (p.estadoPago === "parcial" ? '<div class="owner-note">Abonado ' + money(p.montoAbonado) + " · Restante " + money(restanteDe(p)) + "</div>" : "") +
+        "</td>" +
+        "<td>" + (p.etapa === "entregado"
+          ? "<span class=\"badge badge-good\" data-timer-display=\"" + p.id + "\">✅ " + formatDuration(totalElapsedSeconds(p)) + "</span>"
+          : "<span class=\"owner-note\" data-timer-display=\"" + p.id + "\">" + (p.timerRunning ? "⏱ " : "") + formatDuration(totalElapsedSeconds(p)) + "</span> " +
+            "<button type=\"button\" class=\"btn btn-ghost timer-toggle-btn\" data-id=\"" + p.id + "\" style=\"padding:1px 6px; font-size:11px;\" title=\"" + (p.timerRunning ? "Pausar" : "Iniciar") + " cronómetro\">" + (p.timerRunning ? "⏸" : "▶") + "</button>"
+        ) + "</td>" +
+        "<td class=\"owner-note\">" + escapeHtml(p.updatedBy || p.createdBy || "—") + "</td>" +
+        "</tr>"
+      );
+    }).join("");
+    bindRowEvents();
+  }
+
+  function render() {
+    var hasAny = state.projects.length > 0;
+    els.emptyState.classList.toggle("hidden", hasAny);
+    els.boardView.classList.toggle("hidden", !hasAny || state.view !== "kanban");
+    els.tableView.classList.toggle("hidden", !hasAny || state.view !== "table");
+    renderStats();
+    renderLegend();
+    if (hasAny) {
+      renderBoard();
+      renderTable();
+    }
+  }
+
+  /* ---------------- Datos remotos (Supabase) ---------------- */
+
+  function loadProjects() {
+    return sb.from("projects").select("*").order("fecha_entrega", { ascending: true }).then(function (res) {
+      if (res.error) { showToast("No se pudieron cargar los proyectos: " + res.error.message); return; }
+      state.projects = (res.data || []).map(fromDb);
+      render();
+    });
+  }
+
+  function subscribeRealtime() {
+    if (realtimeChannel) return;
+    realtimeChannel = sb.channel("projects-sync")
+      .on("postgres_changes", { event: "*", schema: "public", table: "projects" }, function () {
+        loadProjects();
+      })
+      .subscribe();
+  }
+
+  function unsubscribeRealtime() {
+    if (realtimeChannel) { sb.removeChannel(realtimeChannel); realtimeChannel = null; }
+  }
+
+  /* ---------------- Drag & drop ---------------- */
+
+  function bindCardEvents() {
+    els.boardView.querySelectorAll(".card").forEach(function (card) {
+      card.addEventListener("dragstart", function (e) {
+        e.dataTransfer.setData("text/plain", card.getAttribute("data-id"));
+        e.dataTransfer.effectAllowed = "move";
+      });
+      card.addEventListener("click", function () { openEdit(card.getAttribute("data-id")); });
+    });
+    els.boardView.querySelectorAll(".timer-toggle-btn").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        toggleTimer(btn.getAttribute("data-id"));
+      });
+    });
+  }
+
+  function bindDragEvents() {
+    els.boardView.querySelectorAll(".column-body").forEach(function (col) {
+      col.addEventListener("dragover", function (e) { e.preventDefault(); col.classList.add("drag-over"); });
+      col.addEventListener("dragleave", function () { col.classList.remove("drag-over"); });
+      col.addEventListener("drop", function (e) {
+        e.preventDefault();
+        col.classList.remove("drag-over");
+        var id = e.dataTransfer.getData("text/plain");
+        var stageId = col.getAttribute("data-stage");
+        var proj = state.projects.find(function (p) { return p.id === id; });
+        if (!proj || proj.etapa === stageId) return;
+        var timerPatch = handleStageChangeTimer(proj, stageId);
+        proj.etapa = stageId; // optimista
+        render();
+        var who = state.currentUser;
+        var updatePayload = {
+          etapa: stageId,
+          updated_by: who.id,
+          updated_by_name: who.name,
+          updated_at: new Date().toISOString()
+        };
+        if (timerPatch) {
+          updatePayload.time_by_stage = timerPatch.time_by_stage;
+          if ("timer_started_at" in timerPatch) updatePayload.timer_started_at = timerPatch.timer_started_at;
+          if ("timer_running" in timerPatch) updatePayload.timer_running = timerPatch.timer_running;
+        }
+        sb.from("projects").update(updatePayload).eq("id", id).then(function (res) {
+          if (res.error) { showToast("No se pudo mover el proyecto: " + res.error.message); loadProjects(); }
+        });
+      });
+    });
+  }
+
+  function bindRowEvents() {
+    els.tableBody.querySelectorAll("tr").forEach(function (row) {
+      row.addEventListener("click", function () { openEdit(row.getAttribute("data-id")); });
+    });
+    els.tableBody.querySelectorAll(".timer-toggle-btn").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        toggleTimer(btn.getAttribute("data-id"));
+      });
+    });
+  }
+
+  /* ---------------- Modal proyecto ---------------- */
+
+  function updateAbonoUI() {
+    var show = els.fPago.value === "parcial" || els.fPago.value === "pagado";
+    els.abonoRow.classList.toggle("hidden", !show);
+    els.cobroRow.classList.toggle("hidden", !(show && editingId));
+    var presupuesto = parseFloat(els.fPresupuesto.value) || 0;
+    var abonado = parseFloat(els.fAbonado.value) || 0;
+    els.fRestante.textContent = money(Math.max(0, presupuesto - abonado));
+  }
+
+  function registrarCobro() {
+    if (!editingId) return;
+    var p = state.projects.find(function (x) { return x.id === editingId; });
+    if (!p) return;
+    var monto = parseFloat(els.fCobroMonto.value) || 0;
+    if (monto <= 0) { showToast("Ingresa un monto mayor a 0 para registrar el cobro"); return; }
+    var fecha = els.fCobroFecha.value || new Date().toISOString().slice(0, 10);
+    var who = state.currentUser;
+    var pagos = (p.pagos || []).slice();
+    pagos.push({ monto: monto, fecha: fecha, registradoPor: who.name });
+    var currentAbonado = parseFloat(els.fAbonado.value) || 0;
+    var nuevoAbonado = currentAbonado + monto;
+    p.pagos = pagos;
+    p.montoAbonado = nuevoAbonado;
+    els.fAbonado.value = nuevoAbonado;
+    els.fCobroMonto.value = "";
+    updateAbonoUI();
+    render();
+    sb.from("projects").update({
+      pagos: pagos,
+      monto_abonado: nuevoAbonado,
+      updated_by: who.id,
+      updated_by_name: who.name,
+      updated_at: new Date().toISOString()
+    }).eq("id", editingId).then(function (res) {
+      if (res.error) { showToast("No se pudo registrar el cobro: " + res.error.message); loadProjects(); }
+      else { showToast("Cobro de " + money(monto) + " registrado"); }
+    });
+  }
+
+  function openNew() {
+    editingId = null;
+    els.modalTitle.textContent = "Nuevo proyecto";
+    els.projectForm.reset();
+    els.fEtapa.value = "pendiente";
+    els.fPrioridad.value = "media";
+    els.fPago.value = "pendiente";
+    els.fAbonado.value = "";
+    els.fCobroFecha.value = new Date().toISOString().slice(0, 10);
+    els.fCobroMonto.value = "";
+    els.deleteBtn.classList.add("hidden");
+    els.timerBox.classList.add("hidden");
+    els.overlay.classList.remove("hidden");
+    updateAbonoUI();
+    els.fNombre.focus();
+  }
+
+  function openEdit(id) {
+    var p = state.projects.find(function (x) { return x.id === id; });
+    if (!p) return;
+    editingId = id;
+    els.modalTitle.textContent = "Editar proyecto";
+    els.fNombre.value = p.nombre || "";
+    els.fCliente.value = p.cliente || "";
+    els.fEtapa.value = p.etapa || "pendiente";
+    els.fFecha.value = p.fechaEntrega || "";
+    els.fPrioridad.value = p.prioridad || "media";
+    els.fPago.value = p.estadoPago || "pendiente";
+    els.fPresupuesto.value = p.presupuesto != null ? p.presupuesto : "";
+    els.fAbonado.value = p.montoAbonado ? p.montoAbonado : "";
+    els.fCobroFecha.value = new Date().toISOString().slice(0, 10);
+    els.fCobroMonto.value = "";
+    els.fNotas.value = p.notas || "";
+    els.deleteBtn.classList.remove("hidden");
+    els.timerBox.classList.remove("hidden");
+    renderTimerBox(p);
+    els.overlay.classList.remove("hidden");
+    updateAbonoUI();
+  }
+
+  function closeModal() { els.overlay.classList.add("hidden"); editingId = null; }
+
+  els.newProjectBtn.addEventListener("click", openNew);
+  els.emptyAddBtn.addEventListener("click", openNew);
+  els.cancelBtn.addEventListener("click", closeModal);
+  els.overlay.addEventListener("click", function (e) { if (e.target === els.overlay) closeModal(); });
+  els.fPago.addEventListener("change", updateAbonoUI);
+  els.fPresupuesto.addEventListener("input", updateAbonoUI);
+  els.fAbonado.addEventListener("input", updateAbonoUI);
+  els.cobroAddBtn.addEventListener("click", registrarCobro);
+  els.timerToggleBtn.addEventListener("click", function () {
+    if (!editingId) return;
+    toggleTimer(editingId);
+  });
+  setInterval(tickRunningTimers, 1000);
+
+  els.projectForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = {
+      nombre: els.fNombre.value.trim(),
+      cliente: els.fCliente.value.trim(),
+      etapa: els.fEtapa.value,
+      fechaEntrega: els.fFecha.value,
+      prioridad: els.fPrioridad.value,
+      estadoPago: els.fPago.value,
+      presupuesto: parseFloat(els.fPresupuesto.value) || 0,
+      montoAbonado: (els.fPago.value === "parcial" || els.fPago.value === "pagado") ? (parseFloat(els.fAbonado.value) || 0) : 0,
+      notas: els.fNotas.value.trim()
+    };
+    if (!form.nombre) return;
+    var who = state.currentUser;
+    var payload = formToDbPayload(form);
+    var req;
+    if (editingId) {
+      var pCurrent = state.projects.find(function (x) { return x.id === editingId; });
+      if (pCurrent && pCurrent.etapa !== form.etapa) {
+        var timerPatch = handleStageChangeTimer(pCurrent, form.etapa);
+        if (timerPatch) {
+          payload.time_by_stage = timerPatch.time_by_stage;
+          if ("timer_started_at" in timerPatch) payload.timer_started_at = timerPatch.timer_started_at;
+          if ("timer_running" in timerPatch) payload.timer_running = timerPatch.timer_running;
+        }
+      }
+      payload.updated_by = who.id;
+      payload.updated_by_name = who.name;
+      payload.updated_at = new Date().toISOString();
+      req = sb.from("projects").update(payload).eq("id", editingId);
+    } else {
+      if (form.montoAbonado > 0) {
+        payload.pagos = [{ monto: form.montoAbonado, fecha: new Date().toISOString().slice(0, 10), registradoPor: who.name, nota: "Abono inicial" }];
+      }
+      payload.created_by = who.id;
+      payload.created_by_name = who.name;
+      payload.updated_by = who.id;
+      payload.updated_by_name = who.name;
+      req = sb.from("projects").insert(payload);
+    }
+    req.then(function (res) {
+      if (res.error) { showToast("Error al guardar: " + res.error.message); return; }
+      closeModal();
+      loadProjects();
+    });
+  });
+
+  els.deleteBtn.addEventListener("click", function () {
+    if (!editingId) return;
+    sb.from("projects").delete().eq("id", editingId).then(function (res) {
+      if (res.error) { showToast("Error al eliminar: " + res.error.message); return; }
+      closeModal();
+      loadProjects();
+    });
+  });
+
+  /* ---------------- Toolbar ---------------- */
+
+  els.searchInput.addEventListener("input", function () { state.search = els.searchInput.value; render(); });
+  els.filterPriority.addEventListener("change", function () { state.filterPriority = els.filterPriority.value; render(); });
+  els.filterPago.addEventListener("change", function () { state.filterPago = els.filterPago.value; render(); });
+
+  els.viewKanbanBtn.addEventListener("click", function () {
+    state.view = "kanban";
+    els.viewKanbanBtn.classList.add("active");
+    els.viewTableBtn.classList.remove("active");
+    render();
+  });
+  els.viewTableBtn.addEventListener("click", function () {
+    state.view = "table";
+    els.viewTableBtn.classList.add("active");
+    els.viewKanbanBtn.classList.remove("active");
+    render();
+  });
+
+  document.querySelectorAll("thead th[data-sort]").forEach(function (th) {
+    th.addEventListener("click", function () {
+      var key = th.getAttribute("data-sort");
+      if (state.sortKey === key) { state.sortDir = state.sortDir === "asc" ? "desc" : "asc"; }
+      else { state.sortKey = key; state.sortDir = "asc"; }
+      render();
+    });
+  });
+
+  /* ---------------- Export ---------------- */
+
+  els.exportBtn.addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), projects: state.projects }, null, 2)],
+      { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    var stamp = new Date().toISOString().slice(0, 10);
+    a.href = url; a.download = "kroma-crm-" + stamp + ".json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  /* ---------------- Reportes de cobros ---------------- */
+
+  function renderReportTable() {
+    var year = els.reportYear.value;
+    var totals = monthlyTotalsForYear(year);
+    var totalAnual = totals.reduce(function (a, b) { return a + b; }, 0);
+    els.reportTableBody.innerHTML = MESES.map(function (m, i) {
+      return "<tr><td>" + m + "</td><td>" + money(totals[i]) + "</td></tr>";
+    }).join("") + "<tr><td><strong>Total " + escapeHtml(year) + "</strong></td><td><strong>" + money(totalAnual) + "</strong></td></tr>";
+  }
+
+  function renderReportsModal() {
+    var years = availableReportYears();
+    var current = els.reportYear.value;
+    els.reportYear.innerHTML = years.map(function (y) { return '<option value="' + y + '">' + y + "</option>"; }).join("");
+    var defaultYear = String(new Date().getFullYear());
+    els.reportYear.value = years.indexOf(current) > -1 ? current : (years.indexOf(defaultYear) > -1 ? defaultYear : years[years.length - 1]);
+    renderReportTable();
+  }
+
+  els.reportsBtn.addEventListener("click", function () {
+    renderReportsModal();
+    els.reportsOverlay.classList.remove("hidden");
+  });
+  els.reportsCancelBtn.addEventListener("click", function () { els.reportsOverlay.classList.add("hidden"); });
+  els.reportsOverlay.addEventListener("click", function (e) { if (e.target === els.reportsOverlay) els.reportsOverlay.classList.add("hidden"); });
+  els.reportYear.addEventListener("change", renderReportTable);
+
+  els.reportsDownloadBtn.addEventListener("click", function () {
+    if (!window.XLSX) { showToast("No se pudo cargar el generador de Excel. Revisa tu conexión a internet e intenta de nuevo."); return; }
+    var year = els.reportYear.value;
+    var totals = monthlyTotalsForYear(year);
+    var totalAnual = totals.reduce(function (a, b) { return a + b; }, 0);
+
+    var resumenRows = [["Mes", "Total cobrado (USD)"]];
+    MESES.forEach(function (m, i) { resumenRows.push([m, totals[i]]); });
+    resumenRows.push(["Total " + year, totalAnual]);
+
+    var detalle = allPagosFlat()
+      .filter(function (pg) { return pg.fecha.slice(0, 4) === year; })
+      .sort(function (a, b) { return a.fecha.localeCompare(b.fecha); });
+    var detalleRows = [["Fecha", "Proyecto", "Cliente", "Monto (USD)", "Registrado por"]];
+    detalle.forEach(function (pg) {
+      detalleRows.push([pg.fecha, pg.proyecto, pg.cliente, pg.monto, pg.registradoPor]);
+    });
+
+    var wb = XLSX.utils.book_new();
+    var wsResumen = XLSX.utils.aoa_to_sheet(resumenRows);
+    wsResumen["!cols"] = [{ wch: 16 }, { wch: 20 }];
+    XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen mensual");
+    var wsDetalle = XLSX.utils.aoa_to_sheet(detalleRows);
+    wsDetalle["!cols"] = [{ wch: 12 }, { wch: 28 }, { wch: 24 }, { wch: 14 }, { wch: 18 }];
+    XLSX.utils.book_append_sheet(wb, wsDetalle, "Detalle de cobros");
+    XLSX.writeFile(wb, "kroma-reporte-cobros-" + year + ".xlsx");
+  });
+
+  /* ---------------- Theme ---------------- */
+
+  var theme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", theme);
+  els.themeToggle.addEventListener("click", function () {
+    theme = theme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+  });
+
+  /* ---------------- Auth flow ---------------- */
+
+  function usernameToEmail(username) {
+    return String(username || "").trim().toLowerCase() + EMAIL_DOMAIN;
+  }
+
+  function userFromSupabase(authUser) {
+    var meta = authUser.user_metadata || {};
+    return {
+      id: authUser.id,
+      name: meta.name || authUser.email,
+      username: meta.username || String(authUser.email || "").split("@")[0],
+      role: meta.role || "admin",
+      mustChangePassword: !!meta.must_change_password,
+      meta: meta
+    };
+  }
+
+  function showLogin() {
+    unsubscribeRealtime();
+    els.appRoot.classList.add("hidden");
+    els.changePwScreen.classList.add("hidden");
+    els.loginScreen.classList.remove("hidden");
+  }
+
+  function showChangePw() {
+    els.appRoot.classList.add("hidden");
+    els.loginScreen.classList.add("hidden");
+    els.changePwScreen.classList.remove("hidden");
+  }
+
+  function showApp() {
+    els.loginScreen.classList.add("hidden");
+    els.changePwScreen.classList.add("hidden");
+    els.appRoot.classList.remove("hidden");
+    els.userAvatar.textContent = initials(state.currentUser.name);
+    els.userName.textContent = state.currentUser.name;
+    loadProjects();
+    subscribeRealtime();
+  }
+
+  function handleSession(session) {
+    if (!session || !session.user) { showLogin(); return; }
+    state.currentUser = userFromSupabase(session.user);
+    if (state.currentUser.mustChangePassword) showChangePw();
+    else showApp();
+  }
+
+  sb.auth.getSession().then(function (res) { handleSession(res.data.session); });
+  sb.auth.onAuthStateChange(function (event, session) {
+    if (event === "SIGNED_OUT") { state.currentUser = null; showLogin(); }
+  });
+
+  els.loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    els.loginError.classList.add("hidden");
+    els.loginSubmitBtn.disabled = true;
+    els.loginSubmitBtn.textContent = "Entrando…";
+    var email = usernameToEmail(els.loginUsername.value);
+    var password = els.loginPassword.value;
+    sb.auth.signInWithPassword({ email: email, password: password }).then(function (res) {
+      els.loginSubmitBtn.disabled = false;
+      els.loginSubmitBtn.textContent = "Entrar";
+      if (res.error) {
+        els.loginError.textContent = "Usuario o contraseña incorrectos";
+        els.loginError.classList.remove("hidden");
+        return;
+      }
+      els.loginForm.reset();
+      handleSession(res.data.session);
+    });
+  });
+
+  function doChangePassword(currentPassword, newPassword, pin, onError) {
+    var email = state.currentUser ? usernameToEmail(state.currentUser.username) : null;
+    // Re-autentica con la contraseña actual para verificarla antes de cambiarla.
+    sb.auth.signInWithPassword({ email: email, password: currentPassword }).then(function (verifyRes) {
+      if (verifyRes.error) { onError("La contraseña actual no es correcta"); return; }
+      var newMeta = Object.assign({}, state.currentUser.meta, { must_change_password: false });
+      sb.auth.updateUser({ password: newPassword, data: newMeta }).then(function (res) {
+        if (res.error) { onError(res.error.message); return; }
+        state.currentUser = userFromSupabase(res.data.user);
+        var afterOk = function () { showApp(); showToast("Contraseña actualizada"); };
+        if (pin) {
+          sb.rpc("set_recovery_pin", { p_pin: pin }).then(function (pinRes) {
+            if (pinRes.error) { showToast("Contraseña guardada, pero el PIN no se pudo guardar: " + pinRes.error.message); showApp(); return; }
+            afterOk();
+          });
+        } else {
+          afterOk();
+        }
+      });
+    });
+  }
+
+  els.changePwForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    els.changePwError.classList.add("hidden");
+    if (els.cpNew.value !== els.cpConfirm.value) {
+      els.changePwError.textContent = "Las contraseñas nuevas no coinciden";
+      els.changePwError.classList.remove("hidden");
+      return;
+    }
+    var current = els.cpCurrent.value, next = els.cpNew.value, pin = els.cpPin.value;
+    doChangePassword(current, next, pin, function (msg) {
+      els.changePwError.textContent = msg;
+      els.changePwError.classList.remove("hidden");
+    });
+    els.changePwForm.reset();
+  });
+
+  els.changePwBtn.addEventListener("click", function () {
+    els.pwModalError.classList.add("hidden");
+    els.pwModalForm.reset();
+    els.pwOverlay.classList.remove("hidden");
+  });
+  els.pwCancelBtn.addEventListener("click", function () { els.pwOverlay.classList.add("hidden"); });
+  els.pwOverlay.addEventListener("click", function (e) { if (e.target === els.pwOverlay) els.pwOverlay.classList.add("hidden"); });
+  els.pwModalForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    els.pwModalError.classList.add("hidden");
+    var current = els.pwCurrent.value, next = els.pwNew.value;
+    doChangePassword(current, next, null, function (msg) {
+      els.pwModalError.textContent = msg;
+      els.pwModalError.classList.remove("hidden");
+    });
+    els.pwOverlay.classList.add("hidden");
+  });
+
+  /* ---------------- PIN de recuperación ---------------- */
+
+  els.changePinBtn.addEventListener("click", function () {
+    els.pinModalError.classList.add("hidden");
+    els.pinModalForm.reset();
+    els.pinOverlay.classList.remove("hidden");
+  });
+  els.pinCancelBtn.addEventListener("click", function () { els.pinOverlay.classList.add("hidden"); });
+  els.pinOverlay.addEventListener("click", function (e) { if (e.target === els.pinOverlay) els.pinOverlay.classList.add("hidden"); });
+  els.pinModalForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    els.pinModalError.classList.add("hidden");
+    var pin = els.pinNew.value;
+    sb.rpc("set_recovery_pin", { p_pin: pin }).then(function (res) {
+      if (res.error) {
+        els.pinModalError.textContent = res.error.message;
+        els.pinModalError.classList.remove("hidden");
+        return;
+      }
+      els.pinOverlay.classList.add("hidden");
+      showToast("PIN de recuperación actualizado");
+    });
+  });
+
+  /* ---------------- Olvidé mi contraseña ---------------- */
+
+  els.forgotPwLink.addEventListener("click", function () {
+    els.forgotModalError.classList.add("hidden");
+    els.forgotModalSuccess.classList.add("hidden");
+    els.forgotModalForm.reset();
+    els.forgotModalForm.classList.remove("hidden");
+    els.forgotOverlay.classList.remove("hidden");
+  });
+  els.forgotCancelBtn.addEventListener("click", function () { els.forgotOverlay.classList.add("hidden"); });
+  els.forgotOverlay.addEventListener("click", function (e) { if (e.target === els.forgotOverlay) els.forgotOverlay.classList.add("hidden"); });
+  els.forgotModalForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    els.forgotModalError.classList.add("hidden");
+    els.forgotSubmitBtn.disabled = true;
+    sb.rpc("reset_password_with_pin", {
+      p_username: els.forgotUsername.value,
+      p_pin: els.forgotPin.value,
+      p_new_password: els.forgotNewPassword.value
+    }).then(function (res) {
+      els.forgotSubmitBtn.disabled = false;
+      if (res.error) {
+        els.forgotModalError.textContent = res.error.message;
+        els.forgotModalError.classList.remove("hidden");
+        return;
+      }
+      if (res.data !== true) {
+        els.forgotModalError.textContent = "Usuario o PIN incorrectos";
+        els.forgotModalError.classList.remove("hidden");
+        return;
+      }
+      els.forgotModalForm.classList.add("hidden");
+      els.forgotModalSuccess.classList.remove("hidden");
+      setTimeout(function () { els.forgotOverlay.classList.add("hidden"); }, 2200);
+    });
+  });
+
+  els.logoutBtn.addEventListener("click", function () {
+    sb.auth.signOut().then(function () {
+      state.currentUser = null;
+      state.projects = [];
+      showLogin();
+    });
+  });
+
+  /* ---------------- Init ---------------- */
+
+  populateEtapaSelect();
+  render();
+})();
+</script>
+</body>
+</html>
