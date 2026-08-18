@@ -151,10 +151,21 @@
   main { padding: 24px 28px 64px; max-width: 1400px; margin: 0 auto; }
 
   .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
-  .stat-tile { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 12px; padding: 16px 18px; }
+  .stat-tile { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: border-color .12s ease, background .12s ease; }
+  .stat-tile:hover { border-color: var(--border-strong); background: var(--surface-2); }
+  .stat-tile.stat-tile-active { border-color: var(--text-primary); }
   .stat-tile .label { font-size: 12.5px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
   .stat-tile .value { font-size: 28px; font-weight: 700; font-variant-numeric: proportional-nums; }
   .stat-tile .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .stat-detail-panel { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 12px; padding: 4px 0; margin-bottom: 22px; margin-top: -8px; overflow: hidden; }
+  .stat-detail-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 18px; border-bottom: 1px solid var(--gridline); cursor: pointer; }
+  .stat-detail-row:last-child { border-bottom: none; }
+  .stat-detail-row:hover { background: var(--surface-2); }
+  .stat-detail-row .sdr-main { min-width: 0; }
+  .stat-detail-row .sdr-title { font-weight: 600; font-size: 13.5px; }
+  .stat-detail-row .sdr-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .stat-detail-row .sdr-value { font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+  .stat-detail-empty { padding: 14px 18px; color: var(--text-muted); font-size: 13px; }
   .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
 
   .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 18px; }
@@ -360,32 +371,36 @@
     <p class="note">Los proyectos viven en la nube (Supabase) y se sincronizan en tiempo real entre iusseff y yeilyn en cualquier dispositivo. <strong>Exportar</strong> descarga un respaldo puntual en JSON.</p>
 
     <section class="stat-row">
-      <div class="stat-tile">
+      <div class="stat-tile" data-stat="active" tabindex="0">
         <div class="label"><span class="dot" style="background:var(--stage-1)"></span>Proyectos activos</div>
         <div class="value" id="statActive">0</div>
         <div class="sub">sin contar entregados</div>
       </div>
-      <div class="stat-tile">
+      <div class="stat-tile" data-stat="soon" tabindex="0">
         <div class="label"><span class="dot" style="background:var(--status-warning)"></span>Vencen esta semana</div>
         <div class="value" id="statSoon">0</div>
         <div class="sub">entrega en 7 días o menos</div>
       </div>
-      <div class="stat-tile">
+      <div class="stat-tile" data-stat="overdue" tabindex="0">
         <div class="label"><span class="dot" style="background:var(--status-critical)"></span>Vencidos</div>
         <div class="value" id="statOverdue">0</div>
         <div class="sub">fecha de entrega ya pasó</div>
       </div>
-      <div class="stat-tile">
+      <div class="stat-tile" data-stat="pending" tabindex="0">
         <div class="label"><span class="dot" style="background:var(--stage-4)"></span>Por cobrar</div>
         <div class="value" id="statPending">$0</div>
         <div class="sub">presupuesto pendiente / parcial</div>
       </div>
-      <div class="stat-tile">
+      <div class="stat-tile" data-stat="collected" tabindex="0">
         <div class="label"><span class="dot" style="background:var(--status-good)"></span>Cobrado este mes</div>
         <div class="value" id="statCollectedMonth">$0</div>
         <div class="sub">suma de cobros registrados</div>
       </div>
     </section>
+
+    <div class="stat-detail-panel hidden" id="statDetailPanel">
+      <div id="statDetailBody"></div>
+    </div>
 
     <div class="toolbar">
       <input type="search" id="searchInput" placeholder="Buscar proyecto o cliente…">
@@ -735,7 +750,8 @@
     "loginScreen", "loginForm", "loginUsername", "loginPassword", "loginError", "loginSubmitBtn",
     "forgotPwLink",
     "changePwScreen", "changePwForm", "cpCurrent", "cpNew", "cpConfirm", "cpPin", "changePwError",
-    "appRoot", "statActive", "statSoon", "statOverdue", "statPending", "statCollectedMonth", "searchInput",
+    "appRoot", "statActive", "statSoon", "statOverdue", "statPending", "statCollectedMonth",
+    "statDetailPanel", "statDetailBody", "searchInput",
     "filterPriority", "filterPago", "viewKanbanBtn", "viewTableBtn", "legend", "emptyState",
     "emptyAddBtn", "boardView", "tableView", "tableBody", "overlay", "modalTitle",
     "projectForm", "fNombre", "fCliente", "fEtapa", "fFecha", "fPrioridad", "fPago",
@@ -1034,7 +1050,102 @@
     els.statOverdue.textContent = overdue.length;
     els.statPending.textContent = money(pending);
     els.statCollectedMonth.textContent = money(collectedThisMonth);
+
+    renderStatDetail();
   }
+
+  /* ---------------- Desglose de paneles de estadísticas ---------------- */
+
+  var expandedStat = null;
+
+  function pagosThisMonthWithProject() {
+    var nowKey = new Date().toISOString().slice(0, 7);
+    var out = [];
+    state.projects.forEach(function (p) {
+      (p.pagos || []).forEach(function (pg) {
+        if ((pg.fecha || "").slice(0, 7) !== nowKey) return;
+        out.push({ id: p.id, cliente: p.cliente || "", proyecto: p.nombre || "", monto: Number(pg.monto) || 0, fecha: pg.fecha || "" });
+      });
+    });
+    return out.sort(function (a, b) { return b.fecha.localeCompare(a.fecha); });
+  }
+
+  function statDetailRowHTML(id, title, sub, value) {
+    return '<div class="stat-detail-row" data-open-id="' + id + '">' +
+      '<div class="sdr-main">' +
+        '<div class="sdr-title">' + escapeHtml(title) + "</div>" +
+        (sub ? '<div class="sdr-sub">' + escapeHtml(sub) + "</div>" : "") +
+      "</div>" +
+      '<div class="sdr-value">' + value + "</div>" +
+    "</div>";
+  }
+
+  function renderStatDetail() {
+    document.querySelectorAll(".stat-tile").forEach(function (tile) {
+      tile.classList.toggle("stat-tile-active", tile.getAttribute("data-stat") === expandedStat);
+    });
+
+    if (!expandedStat) {
+      els.statDetailPanel.classList.add("hidden");
+      els.statDetailBody.innerHTML = "";
+      return;
+    }
+
+    var all = state.projects;
+    var active = all.filter(function (p) { return p.etapa !== "entregado"; });
+    var html = "";
+
+    if (expandedStat === "active") {
+      var list = active.slice().sort(function (a, b) { return (a.fechaEntrega || "").localeCompare(b.fechaEntrega || ""); });
+      html = list.length ? list.map(function (p) {
+        return statDetailRowHTML(p.id, p.nombre, p.cliente || "Sin cliente", '<span class="badge badge-' + urgency(p).key + '">' + stageById(p.etapa).label + "</span>");
+      }).join("") : '<div class="stat-detail-empty">No hay proyectos activos.</div>';
+    } else if (expandedStat === "soon") {
+      var soonList = active.filter(function (p) { var d = daysUntil(p.fechaEntrega); return d !== null && d >= 0 && d <= 7; })
+        .sort(function (a, b) { return (a.fechaEntrega || "").localeCompare(b.fechaEntrega || ""); });
+      html = soonList.length ? soonList.map(function (p) {
+        return statDetailRowHTML(p.id, p.nombre, p.cliente || "Sin cliente", '<span class="badge badge-' + urgency(p).key + '">' + urgency(p).label + "</span>");
+      }).join("") : '<div class="stat-detail-empty">No hay proyectos que venzan esta semana.</div>';
+    } else if (expandedStat === "overdue") {
+      var overdueList = active.filter(function (p) { var d = daysUntil(p.fechaEntrega); return d !== null && d < 0; })
+        .sort(function (a, b) { return (a.fechaEntrega || "").localeCompare(b.fechaEntrega || ""); });
+      html = overdueList.length ? overdueList.map(function (p) {
+        return statDetailRowHTML(p.id, p.nombre, p.cliente || "Sin cliente", '<span class="badge badge-critical">' + urgency(p).label + "</span>");
+      }).join("") : '<div class="stat-detail-empty">No hay proyectos vencidos.</div>';
+    } else if (expandedStat === "pending") {
+      var pendingList = all.filter(function (p) { return p.estadoPago !== "pagado" && restanteDe(p) > 0; })
+        .sort(function (a, b) { return restanteDe(b) - restanteDe(a); });
+      html = pendingList.length ? pendingList.map(function (p) {
+        return statDetailRowHTML(p.id, p.nombre, p.cliente || "Sin cliente", money(restanteDe(p)));
+      }).join("") : '<div class="stat-detail-empty">No hay proyectos con saldo pendiente.</div>';
+    } else if (expandedStat === "collected") {
+      var pagos = pagosThisMonthWithProject();
+      html = pagos.length ? pagos.map(function (pg) {
+        return statDetailRowHTML(pg.id, pg.proyecto, (pg.cliente || "Sin cliente") + " · " + pg.fecha, money(pg.monto));
+      }).join("") : '<div class="stat-detail-empty">Todavía no hay cobros registrados este mes.</div>';
+    }
+
+    els.statDetailBody.innerHTML = html;
+    els.statDetailPanel.classList.remove("hidden");
+
+    els.statDetailBody.querySelectorAll(".stat-detail-row").forEach(function (row) {
+      row.addEventListener("click", function () {
+        var id = row.getAttribute("data-open-id");
+        if (id) openEdit(id);
+      });
+    });
+  }
+
+  document.querySelectorAll(".stat-tile").forEach(function (tile) {
+    tile.addEventListener("click", function () {
+      var key = tile.getAttribute("data-stat");
+      expandedStat = (expandedStat === key) ? null : key;
+      renderStatDetail();
+    });
+    tile.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tile.click(); }
+    });
+  });
 
   function cardHTML(p) {
     var u = urgency(p);
