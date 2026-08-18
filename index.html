@@ -758,6 +758,7 @@
 
   var editingId = null;
   var realtimeChannel = null;
+  var expandedReportMonth = null;
 
   /* ---------------- Helpers de dominio ---------------- */
 
@@ -1625,9 +1626,49 @@
     var year = els.reportYear.value;
     var totals = monthlyTotalsForYear(year);
     var totalAnual = totals.reduce(function (a, b) { return a + b; }, 0);
-    els.reportTableBody.innerHTML = MESES.map(function (m, i) {
-      return "<tr><td>" + m + "</td><td>" + money(totals[i]) + "</td></tr>";
-    }).join("") + "<tr><td><strong>Total " + escapeHtml(year) + "</strong></td><td><strong>" + money(totalAnual) + "</strong></td></tr>";
+    var pagosYear = allPagosFlat().filter(function (pg) { return pg.fecha.slice(0, 4) === year; });
+
+    var rowsHtml = MESES.map(function (m, i) {
+      var row = '<tr class="report-month-row" data-month="' + i + '" style="cursor:pointer;" title="Ver desglose de ' + m.toLowerCase() + '">' +
+        "<td>" + m + " <span style=\"color:var(--text-muted); font-size:11px;\">▾</span></td><td>" + money(totals[i]) + "</td></tr>";
+      if (expandedReportMonth === i) {
+        var monthPagos = pagosYear.filter(function (pg) {
+          return (parseInt(pg.fecha.slice(5, 7), 10) - 1) === i;
+        }).sort(function (a, b) { return a.fecha.localeCompare(b.fecha); });
+        var detailHtml;
+        if (!monthPagos.length) {
+          detailHtml = '<div style="padding:6px 4px; color:var(--text-muted); font-size:12px;">Sin cobros registrados en ' + m.toLowerCase() + ".</div>";
+        } else {
+          detailHtml = '<table style="width:100%; font-size:12px; border-collapse:collapse;"><thead><tr>' +
+            '<th style="text-align:left; padding:4px 6px;">Cliente</th>' +
+            '<th style="text-align:left; padding:4px 6px;">Proyecto</th>' +
+            '<th style="text-align:right; padding:4px 6px;">Monto</th>' +
+            '<th style="text-align:left; padding:4px 6px;">Fecha</th>' +
+            "</tr></thead><tbody>" +
+            monthPagos.map(function (pg) {
+              return "<tr>" +
+                '<td style="padding:4px 6px;">' + escapeHtml(pg.cliente || "—") + "</td>" +
+                '<td style="padding:4px 6px;">' + escapeHtml(pg.proyecto || "—") + "</td>" +
+                '<td style="padding:4px 6px; text-align:right;">' + money(pg.monto) + "</td>" +
+                '<td style="padding:4px 6px;">' + escapeHtml(pg.fecha) + "</td>" +
+                "</tr>";
+            }).join("") +
+            "</tbody></table>";
+        }
+        row += '<tr class="report-month-detail"><td colspan="2" style="background:var(--page-plane); padding:6px 8px;">' + detailHtml + "</td></tr>";
+      }
+      return row;
+    }).join("");
+
+    els.reportTableBody.innerHTML = rowsHtml + "<tr><td><strong>Total " + escapeHtml(year) + "</strong></td><td><strong>" + money(totalAnual) + "</strong></td></tr>";
+
+    els.reportTableBody.querySelectorAll(".report-month-row").forEach(function (row) {
+      row.addEventListener("click", function () {
+        var idx = parseInt(row.getAttribute("data-month"), 10);
+        expandedReportMonth = (expandedReportMonth === idx) ? null : idx;
+        renderReportTable();
+      });
+    });
   }
 
   function renderReportsModal() {
@@ -1636,6 +1677,7 @@
     els.reportYear.innerHTML = years.map(function (y) { return '<option value="' + y + '">' + y + "</option>"; }).join("");
     var defaultYear = String(new Date().getFullYear());
     els.reportYear.value = years.indexOf(current) > -1 ? current : (years.indexOf(defaultYear) > -1 ? defaultYear : years[years.length - 1]);
+    expandedReportMonth = null;
     renderReportTable();
     renderReportFeeClients();
   }
@@ -1646,7 +1688,7 @@
   });
   els.reportsCancelBtn.addEventListener("click", function () { els.reportsOverlay.classList.add("hidden"); });
   els.reportsOverlay.addEventListener("click", function (e) { if (e.target === els.reportsOverlay) els.reportsOverlay.classList.add("hidden"); });
-  els.reportYear.addEventListener("change", renderReportTable);
+  els.reportYear.addEventListener("change", function () { expandedReportMonth = null; renderReportTable(); });
 
   els.reportsDownloadBtn.addEventListener("click", function () {
     if (!window.XLSX) { showToast("No se pudo cargar el generador de Excel. Revisa tu conexión a internet e intenta de nuevo."); return; }
