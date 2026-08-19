@@ -179,6 +179,24 @@
   .view-toggle button { border: none; background: var(--surface-2); color: var(--text-secondary); padding: 8px 14px; cursor: pointer; }
   .view-toggle button.active { background: var(--stage-1); color: #fff; }
 
+  .calendar-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .calendar-title { font-size: 16px; font-weight: 700; min-width: 170px; text-align: center; text-transform: capitalize; }
+  .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 4px; }
+  .calendar-daylabel { font-size: 11px; color: var(--text-muted); text-transform: uppercase; text-align: center; padding: 4px 0; letter-spacing: .02em; }
+  .calendar-cell { background: var(--surface-1); border: 1px solid var(--gridline); border-radius: 10px; min-height: 84px; padding: 6px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; transition: border-color .12s ease, background .12s ease; }
+  .calendar-cell:hover { border-color: var(--border-strong); background: var(--surface-2); }
+  .calendar-cell-empty { background: transparent; border-color: transparent; cursor: default; }
+  .calendar-cell-today { border-color: var(--stage-1); }
+  .calendar-cell-selected { border-color: var(--text-primary); background: var(--surface-2); }
+  .calendar-cell .cc-num { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+  .calendar-cell-today .cc-num { color: var(--stage-1); }
+  .calendar-cell .cc-chip { font-size: 10.5px; padding: 2px 5px; border-radius: 5px; background: var(--gridline); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 3px solid var(--stage-1); }
+  .calendar-cell .cc-more { font-size: 10.5px; color: var(--text-muted); padding: 0 2px; }
+  @media (max-width: 720px) {
+    .calendar-cell { min-height: 62px; }
+    .calendar-daylabel { font-size: 9.5px; }
+  }
+
   .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; font-size: 12.5px; color: var(--text-secondary); }
   .legend .item { display: flex; align-items: center; gap: 6px; }
 
@@ -420,6 +438,7 @@
       <div class="view-toggle">
         <button id="viewKanbanBtn" class="active">Tablero</button>
         <button id="viewTableBtn">Lista</button>
+        <button id="viewCalendarBtn">Calendario</button>
       </div>
     </div>
 
@@ -450,6 +469,19 @@
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
+    </div>
+
+    <div id="calendarView" class="hidden">
+      <div class="calendar-header">
+        <button type="button" class="btn btn-ghost" id="calPrevBtn">‹</button>
+        <div class="calendar-title" id="calTitle">—</div>
+        <button type="button" class="btn btn-ghost" id="calNextBtn">›</button>
+        <button type="button" class="btn btn-ghost" id="calTodayBtn" style="margin-left:auto;">Hoy</button>
+      </div>
+      <div class="calendar-grid" id="calGrid"></div>
+      <div class="stat-detail-panel hidden" id="calDetailPanel">
+        <div id="calDetailBody"></div>
+      </div>
     </div>
   </main>
 </div>
@@ -752,8 +784,10 @@
     "changePwScreen", "changePwForm", "cpCurrent", "cpNew", "cpConfirm", "cpPin", "changePwError",
     "appRoot", "statActive", "statSoon", "statOverdue", "statPending", "statCollectedMonth",
     "statDetailPanel", "statDetailBody", "searchInput",
-    "filterPriority", "filterPago", "viewKanbanBtn", "viewTableBtn", "legend", "emptyState",
-    "emptyAddBtn", "boardView", "tableView", "tableBody", "overlay", "modalTitle",
+    "filterPriority", "filterPago", "viewKanbanBtn", "viewTableBtn", "viewCalendarBtn", "legend", "emptyState",
+    "emptyAddBtn", "boardView", "tableView", "tableBody",
+    "calendarView", "calGrid", "calTitle", "calPrevBtn", "calNextBtn", "calTodayBtn", "calDetailPanel", "calDetailBody",
+    "overlay", "modalTitle",
     "projectForm", "fNombre", "fCliente", "fEtapa", "fFecha", "fPrioridad", "fPago",
     "fPresupuesto", "abonoRow", "fAbonado", "fRestante",
     "cobroRow", "fCobroFecha", "fCobroMonto", "cobroAddBtn",
@@ -1239,17 +1273,132 @@
     bindRowEvents();
   }
 
+  /* ---------------- Calendario ---------------- */
+
+  var calToday = new Date();
+  var calendarYear = calToday.getFullYear();
+  var calendarMonth = calToday.getMonth(); // 0-11
+  var selectedCalendarDay = null; // "YYYY-MM-DD"
+
+  function pad2(n) { return n < 10 ? "0" + n : String(n); }
+  function todayYmd() { var d = new Date(); return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+
+  function projectsByDate() {
+    var map = {};
+    filteredProjects().forEach(function (p) {
+      if (!p.fechaEntrega) return;
+      (map[p.fechaEntrega] = map[p.fechaEntrega] || []).push(p);
+    });
+    return map;
+  }
+
+  function renderCalendar() {
+    var byDate = projectsByDate();
+    var monthLabel = new Date(calendarYear, calendarMonth, 1).toLocaleDateString("es-ES", { month: "long", year: "numeric" });
+    els.calTitle.textContent = monthLabel;
+
+    var firstOfMonth = new Date(calendarYear, calendarMonth, 1);
+    var startOffset = firstOfMonth.getDay(); // 0=domingo
+    var daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+    var tYmd = todayYmd();
+
+    var dayLabels = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+    var html = dayLabels.map(function (d) { return '<div class="calendar-daylabel">' + d + "</div>"; }).join("");
+
+    for (var i = 0; i < startOffset; i++) {
+      html += '<div class="calendar-cell calendar-cell-empty"></div>';
+    }
+
+    for (var day = 1; day <= daysInMonth; day++) {
+      var ymd = calendarYear + "-" + pad2(calendarMonth + 1) + "-" + pad2(day);
+      var items = byDate[ymd] || [];
+      var classes = "calendar-cell";
+      if (ymd === tYmd) classes += " calendar-cell-today";
+      if (ymd === selectedCalendarDay) classes += " calendar-cell-selected";
+      var chips = items.slice(0, 3).map(function (p) {
+        return '<div class="cc-chip" style="border-left-color:' + stageById(p.etapa).color + ';">' + escapeHtml(p.nombre) + "</div>";
+      }).join("");
+      var more = items.length > 3 ? '<div class="cc-more">+' + (items.length - 3) + " más</div>" : "";
+      html += '<div class="' + classes + '" data-date="' + ymd + '">' +
+        '<div class="cc-num">' + day + "</div>" +
+        chips + more +
+        "</div>";
+    }
+
+    els.calGrid.innerHTML = html;
+
+    els.calGrid.querySelectorAll(".calendar-cell[data-date]").forEach(function (cell) {
+      cell.addEventListener("click", function () {
+        var ymd = cell.getAttribute("data-date");
+        selectedCalendarDay = (selectedCalendarDay === ymd) ? null : ymd;
+        renderCalendar();
+        renderCalendarDetail();
+      });
+    });
+
+    renderCalendarDetail();
+  }
+
+  function renderCalendarDetail() {
+    if (!selectedCalendarDay) {
+      els.calDetailPanel.classList.add("hidden");
+      els.calDetailBody.innerHTML = "";
+      return;
+    }
+    var byDate = projectsByDate();
+    var items = (byDate[selectedCalendarDay] || []).slice().sort(function (a, b) {
+      return (a.nombre || "").localeCompare(b.nombre || "");
+    });
+    var dateLabel = new Date(selectedCalendarDay + "T00:00:00").toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+    var html = '<div style="padding:12px 18px 4px; font-weight:700; font-size:13.5px; text-transform:capitalize;">' + escapeHtml(dateLabel) + "</div>";
+    html += items.length ? items.map(function (p) {
+      var stage = stageById(p.etapa);
+      return statDetailRowHTML(p.id, p.nombre, (p.cliente || "Sin cliente") + " · " + stage.label, '<span class="badge badge-' + urgency(p).key + '">' + priorityLabel(p.prioridad || "media") + "</span>");
+    }).join("") : '<div class="stat-detail-empty">Sin entregas programadas para este día — día libre.</div>';
+
+    els.calDetailBody.innerHTML = html;
+    els.calDetailPanel.classList.remove("hidden");
+
+    els.calDetailBody.querySelectorAll(".stat-detail-row").forEach(function (row) {
+      row.addEventListener("click", function () {
+        var id = row.getAttribute("data-open-id");
+        if (id) openEdit(id);
+      });
+    });
+  }
+
+  els.calPrevBtn.addEventListener("click", function () {
+    calendarMonth -= 1;
+    if (calendarMonth < 0) { calendarMonth = 11; calendarYear -= 1; }
+    renderCalendar();
+  });
+  els.calNextBtn.addEventListener("click", function () {
+    calendarMonth += 1;
+    if (calendarMonth > 11) { calendarMonth = 0; calendarYear += 1; }
+    renderCalendar();
+  });
+  els.calTodayBtn.addEventListener("click", function () {
+    var d = new Date();
+    calendarYear = d.getFullYear();
+    calendarMonth = d.getMonth();
+    selectedCalendarDay = todayYmd();
+    renderCalendar();
+  });
+
   function render() {
     var hasAny = state.projects.length > 0;
-    els.emptyState.classList.toggle("hidden", hasAny);
+    els.emptyState.classList.toggle("hidden", hasAny || state.view === "calendar");
     els.boardView.classList.toggle("hidden", !hasAny || state.view !== "kanban");
     els.tableView.classList.toggle("hidden", !hasAny || state.view !== "table");
+    els.calendarView.classList.toggle("hidden", state.view !== "calendar");
     renderStats();
     renderLegend();
     if (hasAny) {
       renderBoard();
       renderTable();
     }
+    if (state.view === "calendar") renderCalendar();
   }
 
   /* ---------------- Datos remotos (Supabase) ---------------- */
@@ -1696,18 +1845,16 @@
   els.filterPriority.addEventListener("change", function () { state.filterPriority = els.filterPriority.value; render(); });
   els.filterPago.addEventListener("change", function () { state.filterPago = els.filterPago.value; render(); });
 
-  els.viewKanbanBtn.addEventListener("click", function () {
-    state.view = "kanban";
-    els.viewKanbanBtn.classList.add("active");
-    els.viewTableBtn.classList.remove("active");
+  function setView(view) {
+    state.view = view;
+    els.viewKanbanBtn.classList.toggle("active", view === "kanban");
+    els.viewTableBtn.classList.toggle("active", view === "table");
+    els.viewCalendarBtn.classList.toggle("active", view === "calendar");
     render();
-  });
-  els.viewTableBtn.addEventListener("click", function () {
-    state.view = "table";
-    els.viewTableBtn.classList.add("active");
-    els.viewKanbanBtn.classList.remove("active");
-    render();
-  });
+  }
+  els.viewKanbanBtn.addEventListener("click", function () { setView("kanban"); });
+  els.viewTableBtn.addEventListener("click", function () { setView("table"); });
+  els.viewCalendarBtn.addEventListener("click", function () { setView("calendar"); });
 
   document.querySelectorAll("thead th[data-sort]").forEach(function (th) {
     th.addEventListener("click", function () {
